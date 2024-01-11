@@ -3,5 +3,3 @@ Files placed in this directory will be deployed to the RoboRIO into the
 to get a proper path relative to the deploy directory.
 
 i love FRC??!?!?!
-
-i love lobotomys
