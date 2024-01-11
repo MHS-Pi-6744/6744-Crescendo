@@ -31,6 +31,9 @@ public final class Constants {
     public static final int kLeftMotor2CANID = 2;
     public static final int kRightMotorCANID = 3;
     public static final int kRightMotor2CANID = 4;
+
+    public static final int[] kLeftEncoderPort = {-1,-1};
+    public static final int[] kRightEncoderPort = {-1,-1};
   }
   
   //Operator input constants - RM
