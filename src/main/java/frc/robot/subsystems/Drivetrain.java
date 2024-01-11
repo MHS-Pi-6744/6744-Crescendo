@@ -37,6 +37,8 @@ public class Drivetrain extends SubsystemBase {
   );
 
 
+
+
   /** Creates a new subsystem. */
   public Drivetrain() {
     
@@ -45,6 +47,9 @@ public class Drivetrain extends SubsystemBase {
     rightMotor2.follow(rightMotor1);
     
     rightMotor1.setInverted(true);
+
+    m_LeftEncoder.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
+    m_RightEncoder.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
   }
 
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
@@ -81,10 +86,10 @@ public class Drivetrain extends SubsystemBase {
 
   public Command driveDistanceCommand(Double DistanceM, Double SpeedM){
     return runOnce(() -> {
-
-
-
-    });
+      m_RightEncoder.reset();
+      m_LeftEncoder.reset();
+    }).andThen(/*run(() -> m_drive.arcadeDrive(speed, 0)  Drive little bro*/)
+    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM);//.finallyDo(interuppted -> stopmoto);
   }
 
 
