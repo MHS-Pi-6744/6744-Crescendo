@@ -7,7 +7,6 @@ import frc.robot.Constants.DrivetrainConstants;
 import edu.wpi.first.wpilibj.Encoder;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import java.util.function.DoubleSupplier;
@@ -60,6 +59,35 @@ public class Drivetrain extends SubsystemBase {
     .finallyDo(interuppted -> m_myRobot.stopMotor());
 
   }
+  /* 
+  public Command driveDistanceCommand(double distanceMeters, double speed) {
+    return runOnce(
+            () -> {
+              // Reset encoders at the start of the command
+              m_leftEncoder.reset();
+              m_rightEncoder.reset();
+            })
+        // Drive forward at specified speed
+        .andThen(run(() -> m_drive.arcadeDrive(speed, 0)))
+        // End command when we've traveled the specified distance
+        .until(
+            () ->
+                Math.max(m_leftEncoder.getDistance(), m_rightEncoder.getDistance())
+                    >= distanceMeters)
+        // Stop the drive when the command ends
+        .finallyDo(interrupted -> m_drive.stopMotor());
+  }*/
+
+
+  public Command driveDistanceCommand(Double DistanceM, Double SpeedM){
+    return runOnce(() -> {
+
+
+
+    });
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
