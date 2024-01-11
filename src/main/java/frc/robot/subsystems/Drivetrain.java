@@ -7,6 +7,7 @@ import frc.robot.Constants.DrivetrainConstants;
 import edu.wpi.first.wpilibj.Encoder;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import java.util.function.DoubleSupplier;
@@ -24,7 +25,17 @@ public class Drivetrain extends SubsystemBase {
 
   // Add encoders here - RM
 
-  //private final Encoder m_LeftEncoder = new Encoder();
+  private final Encoder m_RightEncoder = new Encoder(
+    DrivetrainConstants.kRightEncoderPort[0],
+    DrivetrainConstants.kRightEncoderPort[1],
+    DrivetrainConstants.kRightEncoderrevesed
+  );
+
+  private final Encoder m_LeftEncoder = new Encoder(
+    DrivetrainConstants.kLeftEncoderPort[0],
+    DrivetrainConstants.kLeftEncoderPort[1],
+    DrivetrainConstants.kLeftEncoderReversed
+  );
 
 
   /** Creates a new subsystem. */
