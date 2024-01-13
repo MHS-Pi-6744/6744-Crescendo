@@ -13,4 +13,12 @@ public final class Autos {
         return Commands.sequence(
             m_IntakeSubsystem.releaseCommand().withTimeout(2),
             m_myRobot.driveForwardCommand(AutoConstants.kTimeoutSeconds, AutoConstants.kDriveSpeed));     }
-}
+
+public static Command goPickupAuto(Drivetrain m_myRobot, IntakeSubsystem m_IntakeSubsystem){
+        return Commands.sequence(
+            m_myRobot.driveForwardCommand(AutoConstants.kTimeoutSeconds, AutoConstants.kDriveSpeed),  
+            m_IntakeSubsystem.pickupCommand().withTimeout(2));
+               }
+
+            }
+        

@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+
 //import frc.robot.Constants;
 
 /**The following is an example of using the INLINE method of calling commands. A seperate command file is not required.
@@ -15,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_intakeMotor = new WPI_TalonSRX(IntakeConstants.Intake_CANID);
+    
 
   
 /** Returns a command that runs the intake */

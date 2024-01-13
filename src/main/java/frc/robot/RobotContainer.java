@@ -10,6 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.UpperArmIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,6 +31,7 @@ public class RobotContainer {
   private final Drivetrain m_myRobot = new Drivetrain();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final UpperArmIntake m_UpperArmIntake = new UpperArmIntake();
 
   // The autonomous routines
   private final Command m_dropAndGo = Autos.dropAndGoAuto(m_myRobot,m_intake);
@@ -69,10 +71,17 @@ private void configureButtonBindings() {
     m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
 
 
+
     // Run the arm motor in reverse for x seconds
-    m_driverController.b().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
+    m_driverController.leftBumper().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
     // Run the arm motor for x seconds
-    m_driverController.a().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
+    m_driverController.rightBumper().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
+
+
+    //Upper Intake 
+
+     m_driverController.a().whileTrue(m_UpperArmIntake.UpperpickupCommand());
+     m_driverController.x().whileTrue(m_UpperArmIntake.UpperreleaseCommand());
    
   }
 
