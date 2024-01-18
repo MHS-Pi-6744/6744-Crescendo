@@ -50,7 +50,25 @@ public class Drivetrain extends SubsystemBase {
       m_drive.arcadeDrive(FWD, Rotate);
     });
   }
-  
+  /* 
+  public Command driveDistanceCommand(double distanceMeters, double speed) {
+    return runOnce(
+            () -> {
+              // Reset encoders at the start of the command
+              m_leftEncoder.reset();
+              m_rightEncoder.reset();
+            })
+        // Drive forward at specified speed
+        .andThen(run(() -> m_drive.arcadeDrive(speed, 0)))
+        // End command when we've traveled the specified distance
+        .until(
+            () ->
+                Math.max(m_leftEncoder.getDistance(), m_rightEncoder.getDistance())
+                    >= distanceMeters)
+        // Stop the drive when the command ends
+        .finallyDo(interrupted -> m_drive.stopMotor());
+  }*/
+
 
   public Command driveDistanceCommand(double DistanceM, double Speed){
     return runOnce(() -> {
