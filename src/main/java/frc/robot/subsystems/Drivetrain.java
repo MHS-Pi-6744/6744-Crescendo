@@ -37,18 +37,42 @@ public class Drivetrain extends SubsystemBase {
     rightMotor1.setInverted(true);
   }
 
-  public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
-    // A split-stick arcade command, with forward/backward controlled by the left
-    // hand, and turning controlled by the right.
-    return run(() -> m_myRobot.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble()))
-        .withName("arcadeDrive");
+  public void arcadeDrive(double FWD, double Rotate){
+    m_drive.arcadeDrive(FWD, Rotate);
   }
-
+  
   public Command driveForwardCommand(double timeout, double speed){
-    return runOnce(() -> m_myRobot.arcadeDrive(speed, 0))
-    .finallyDo(interuppted -> m_myRobot.stopMotor());
-
+    return runOnce(() -> m_drive.arcadeDrive(speed, 0))
+    .finallyDo(interuppted -> m_drive.stopMotor());
   }
+  /* 
+  public Command driveDistanceCommand(double distanceMeters, double speed) {
+    return runOnce(
+            () -> {
+              // Reset encoders at the start of the command
+              m_leftEncoder.reset();
+              m_rightEncoder.reset();
+            })
+        // Drive forward at specified speed
+        .andThen(run(() -> m_drive.arcadeDrive(speed, 0)))
+        // End command when we've traveled the specified distance
+        .until(
+            () ->
+                Math.max(m_leftEncoder.getDistance(), m_rightEncoder.getDistance())
+                    >= distanceMeters)
+        // Stop the drive when the command ends
+        .finallyDo(interrupted -> m_drive.stopMotor());
+  }*/
+
+
+  public Command driveDistanceCommand(Double DistanceM, Double Speed){
+    return runOnce(() -> {
+      m_RightEncoder.reset();
+      m_LeftEncoder.reset();
+    }).andThen(run(() -> m_drive.arcadeDrive(Speed, 0)).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM));//.finallyDo(interuppted -> stopmoto);
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
