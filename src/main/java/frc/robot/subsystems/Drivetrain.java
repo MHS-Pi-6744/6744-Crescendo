@@ -60,6 +60,8 @@ public class Drivetrain extends SubsystemBase {
         .withName("arcadeDrive");
   }
 
+  public Command 
+
   public Command driveForwardCommand(double timeout, double speed){
     return runOnce(() -> m_myRobot.arcadeDrive(speed, 0))
     .finallyDo(interuppted -> m_myRobot.stopMotor());
@@ -89,8 +91,7 @@ public class Drivetrain extends SubsystemBase {
     return runOnce(() -> {
       m_RightEncoder.reset();
       m_LeftEncoder.reset();
-    }).andThen(/*run(() -> m_drive.arcadeDrive(speed, 0)  Drive little bro*/)
-    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM);//.finallyDo(interuppted -> stopmoto);
+    }).andThen(run(() -> arcadeDriveCommand(0, 0))).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM);//.finallyDo(interuppted -> stopmoto);
   }
 
 
