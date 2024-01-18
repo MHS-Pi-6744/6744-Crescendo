@@ -21,7 +21,7 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
 
-  private final DifferentialDrive m_myRobot = new DifferentialDrive(leftMotor1,rightMotor1);
+  private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);
 
   // Add encoders here - RM
 
@@ -53,19 +53,13 @@ public class Drivetrain extends SubsystemBase {
     m_RightEncoder.setDistancePerPulse(DrivetrainConstants.kEncoderDistancePerPulse);
   }
 
-  public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
-    // A split-stick arcade command, with forward/backward controlled by the left
-    // hand, and turning controlled by the right.
-    return run(() -> m_myRobot.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble()))
-        .withName("arcadeDrive");
+  public void arcadeDrive(double FWD, double Rotate){
+    m_drive.arcadeDrive(FWD, Rotate);
   }
-
-  public Command 
-
+  
   public Command driveForwardCommand(double timeout, double speed){
-    return runOnce(() -> m_myRobot.arcadeDrive(speed, 0))
-    .finallyDo(interuppted -> m_myRobot.stopMotor());
-
+    return runOnce(() -> m_drive.arcadeDrive(speed, 0))
+    .finallyDo(interuppted -> m_drive.stopMotor());
   }
   /* 
   public Command driveDistanceCommand(double distanceMeters, double speed) {
@@ -87,11 +81,11 @@ public class Drivetrain extends SubsystemBase {
   }*/
 
 
-  public Command driveDistanceCommand(Double DistanceM, Double SpeedM){
+  public Command driveDistanceCommand(Double DistanceM, Double Speed){
     return runOnce(() -> {
       m_RightEncoder.reset();
       m_LeftEncoder.reset();
-    }).andThen(run(() -> arcadeDriveCommand(0, 0))).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM);//.finallyDo(interuppted -> stopmoto);
+    }).andThen(run(() -> m_drive.arcadeDrive(Speed, 0)).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM));//.finallyDo(interuppted -> stopmoto);
   }
 
 
