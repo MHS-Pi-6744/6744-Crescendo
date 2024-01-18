@@ -56,11 +56,7 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double FWD, double Rotate){
     m_drive.arcadeDrive(FWD, Rotate);
   }
-  
-  public Command driveForwardCommand(double timeout, double speed){
-    return runOnce(() -> m_drive.arcadeDrive(speed, 0))
-    .finallyDo(interuppted -> m_drive.stopMotor());
-  }
+
   /* 
   public Command driveDistanceCommand(double distanceMeters, double speed) {
     return runOnce(
@@ -81,13 +77,23 @@ public class Drivetrain extends SubsystemBase {
   }*/
 
 
-  public Command driveDistanceCommand(Double DistanceM, Double Speed){
+  public Command driveDistanceCommand(double DistanceM, double Speed /*-1 to 1 */){
     return runOnce(() -> {
       m_RightEncoder.reset();
       m_LeftEncoder.reset();
-    }).andThen(run(() -> m_drive.arcadeDrive(Speed, 0)).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM));//.finallyDo(interuppted -> stopmoto);
+    })
+    .andThen(run(() -> m_drive.arcadeDrive(Speed, 0))
+    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM))
+    .finallyDo(interuppted -> m_drive.stopMotor());
   }
 
+  public Command driveRotateCommand(double degrees, double Speed){
+    return runOnce(() ->{
+        m_drive.arcadeDrive(Speed, degrees);
+    })
+    .finallyDo(interuppted -> m_drive.stopMotor());
+
+  }
 
   @Override
   public void periodic() {

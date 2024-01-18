@@ -27,12 +27,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_myRobot = new Drivetrain();
+  private final Drivetrain m_drive = new Drivetrain();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 
   // The autonomous routines
-  private final Command m_dropAndGo = Autos.dropAndGoAuto(m_myRobot,m_intake);
+  private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -44,12 +44,18 @@ public RobotContainer(){
   // Configure the button bindings
   configureButtonBindings();
 
+
+
+  /*
+   * IF IT BREAKS IT BECAUSE OF THIS
+   * 
+   */
   // Configure default commands
   // Set the default drive command to split-stick arcade drive
-  m_myRobot.setDefaultCommand(
-    m_myRobot.arcadeDriveCommand(
-        () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
-  
+  //m_drive.setDefaultCommand(
+  //);
+  //m_drive.arcadeDriveCommand(() -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
+
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
 
