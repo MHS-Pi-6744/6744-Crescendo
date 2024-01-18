@@ -14,6 +14,7 @@ public final class Autos {
             m_IntakeSubsystem.releaseCommand().withTimeout(2),
             m_myRobot.driveForwardCommand(AutoConstants.kTimeoutSeconds, AutoConstants.kDriveSpeed));     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 public static Command goPickupAuto(Drivetrain m_myRobot, IntakeSubsystem m_IntakeSubsystem){
         return Commands.sequence(
@@ -24,5 +25,7 @@ public static Command goPickupAuto(Drivetrain m_myRobot, IntakeSubsystem m_Intak
             }
         
 =======
+=======
+>>>>>>> parent of 196eef4 (IF it breaks look at robot container)
 }
 >>>>>>> parent of 196eef4 (IF it breaks look at robot container)
