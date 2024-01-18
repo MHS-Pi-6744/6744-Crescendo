@@ -20,11 +20,19 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
 
-  private final DifferentialDrive m_myRobot = new DifferentialDrive(leftMotor1,rightMotor1);
+  private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);
 
-  // Add encoders here - RM
+  private final Encoder m_RightEncoder = new Encoder(
+    DrivetrainConstants.kRightEncoderPort[0],
+    DrivetrainConstants.kRightEncoderPort[1],
+    DrivetrainConstants.kRightEncoderrevesed
+  );
 
-  //private final Encoder m_LeftEncoder = new Encoder();
+  private final Encoder m_LeftEncoder = new Encoder(
+    DrivetrainConstants.kLeftEncoderPort[0],
+    DrivetrainConstants.kLeftEncoderPort[1],
+    DrivetrainConstants.kLeftEncoderReversed
+  );
 
 
   /** Creates a new subsystem. */
@@ -37,39 +45,29 @@ public class Drivetrain extends SubsystemBase {
     rightMotor1.setInverted(true);
   }
 
-  public void arcadeDrive(double FWD, double Rotate){
-    m_drive.arcadeDrive(FWD, Rotate);
+  public Command arcadeDrive(double FWD, double Rotate){
+    return runOnce(()->{
+      m_drive.arcadeDrive(FWD, Rotate);
+    });
   }
   
-  public Command driveForwardCommand(double timeout, double speed){
-    return runOnce(() -> m_drive.arcadeDrive(speed, 0))
-    .finallyDo(interuppted -> m_drive.stopMotor());
-  }
-  /* 
-  public Command driveDistanceCommand(double distanceMeters, double speed) {
-    return runOnce(
-            () -> {
-              // Reset encoders at the start of the command
-              m_leftEncoder.reset();
-              m_rightEncoder.reset();
-            })
-        // Drive forward at specified speed
-        .andThen(run(() -> m_drive.arcadeDrive(speed, 0)))
-        // End command when we've traveled the specified distance
-        .until(
-            () ->
-                Math.max(m_leftEncoder.getDistance(), m_rightEncoder.getDistance())
-                    >= distanceMeters)
-        // Stop the drive when the command ends
-        .finallyDo(interrupted -> m_drive.stopMotor());
-  }*/
 
-
-  public Command driveDistanceCommand(Double DistanceM, Double Speed){
+  public Command driveDistanceCommand(double DistanceM, double Speed){
     return runOnce(() -> {
       m_RightEncoder.reset();
       m_LeftEncoder.reset();
-    }).andThen(run(() -> m_drive.arcadeDrive(Speed, 0)).until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM));//.finallyDo(interuppted -> stopmoto);
+    })
+    .andThen(run(() -> m_drive.arcadeDrive(Speed, 0))
+    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM))
+    .finallyDo(interuppted -> m_drive.stopMotor());
+  }
+  
+  public Command driveRotateCommand(double degrees, double Speed){
+    return runOnce(() ->{
+        m_drive.arcadeDrive(Speed, degrees);
+    })
+    .finallyDo(interuppted -> m_drive.stopMotor());
+
   }
 
 

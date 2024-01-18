@@ -9,8 +9,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 public final class Autos {
     
 
-    public static Command dropAndGoAuto(Drivetrain m_myRobot, IntakeSubsystem m_IntakeSubsystem){
+    public static Command dropAndGoAuto(Drivetrain m_drive, IntakeSubsystem m_IntakeSubsystem){
         return Commands.sequence(
             m_IntakeSubsystem.releaseCommand().withTimeout(2),
-            m_myRobot.driveForwardCommand(AutoConstants.kTimeoutSeconds, AutoConstants.kDriveSpeed));     }
+            m_drive.driveDistanceCommand(2, 0.2) 
+        );
+    }
 }
