@@ -34,6 +34,15 @@ public final class Constants {
 
     public static final int[] kLeftEncoderPort = {-1,-1};
     public static final int[] kRightEncoderPort = {-1,-1};
+
+    public static final boolean kLeftEncoderReversed = false;
+    public static final boolean kRightEncoderrevesed = true;
+
+
+    public static final double wheelDiam = 0.15; //IN METERS
+    public static final double kEncoderDistancePerPulse = 
+    (wheelDiam * Math.PI) / (double) 1024; // Cycles per Rev 4 or 4096 idk 
+    
   }
   
   //Operator input constants - RM
