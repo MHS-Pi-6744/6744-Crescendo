@@ -7,6 +7,7 @@ import frc.robot.Constants.DrivetrainConstants;
 //import edu.wpi.first.wpilibj.Encoder;
 import com.revrobotics.CANSparkMax;
 import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -30,7 +31,9 @@ public class Drivetrain extends SubsystemBase {
     leftMotor2.follow(leftMotor1);
     rightMotor2.follow(rightMotor1);
     
+    //Flip values so robot moves forward when stick-forward/LEDs-green */
     rightMotor1.setInverted(true);
+    leftMotor1.setInverted(false);
   }
 /* 
   public Command arcadeDrive(double FWD, double Rotate){
