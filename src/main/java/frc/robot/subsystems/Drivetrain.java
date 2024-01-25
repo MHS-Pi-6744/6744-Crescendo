@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import java.util.function.DoubleSupplier;
-
 
 public class Drivetrain extends SubsystemBase {
 
