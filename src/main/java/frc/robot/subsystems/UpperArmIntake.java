@@ -15,6 +15,7 @@ public class UpperArmIntake extends SubsystemBase {
     private final WPI_TalonSRX m_UpperintakeMotorL = new WPI_TalonSRX(UpperIntakeConstants.kRightGateMotorCANID);
     private final  WPI_TalonSRX m_UpperintakeMotorR = new WPI_TalonSRX(UpperIntakeConstants.kLeftGateMotorCANID);
 
+
     public UpperArmIntake() {
     
    
