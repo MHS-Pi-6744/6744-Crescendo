@@ -21,11 +21,32 @@ import com.revrobotics.CANSparkLowLevel;
 
 public class ArmSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_armMotor = new WPI_TalonSRX(UpperIntakeConstants.kArmMotorCANID);
-    private final CANSparkMax m_sparkMotor = new CANSparkMax(SparkmaxArmConstants.kSparkMaxCANID, MotorType.kBrushless);
+    private final CANSparkBase m_sparkMotor = new CANSparkMax(SparkmaxArmConstants.kSparkMaxCANID,MotorType.kBrushless);
+
+    private final RelativeEncoder m_encoder = m_sparkMotor.getEncoder();
+
+   
+
+
+
+
+    
+
+
+    
    
     static final double armSpeed = .25;
+
     
     
+
+
+    
+
+
+
+    
+
 
   
     
