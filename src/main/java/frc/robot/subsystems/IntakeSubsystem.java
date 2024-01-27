@@ -26,7 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command pickupCommand() {
         return startEnd(
                 // Start the intake motor
-                () -> m_intakeMotor.set(IntakeConstants.k_intakeSpeed), 
+                () -> m_intakeMotor.set(IntakeConstants.k_intakeSpeed),
                 // Stop the motor when command ends
                 () -> m_intakeMotor.stopMotor()); 
         }
