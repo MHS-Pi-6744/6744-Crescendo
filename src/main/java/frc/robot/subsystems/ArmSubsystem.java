@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,6 +17,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class ArmSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_armMotor = new WPI_TalonSRX(UpperIntakeConstants.kArmMotorCANID);
     private final CANSparkMax m_sparkMotor = new CANSparkMax(SparkmaxArmConstants.kSparkMaxCANID, MotorType.kBrushless);
+    
     
     
 
@@ -35,6 +37,16 @@ public class ArmSubsystem extends SubsystemBase {
             () -> m_armMotor.set(armSpeed),
             () -> m_armMotor.stopMotor());
     }
+
+
+    public Command sparkMaxDistance(double DistanceM, double Speed){
+        return runOnce(() -> {
+          .reset();
+        })
+        .andThen(run(() -> m_drive.arcadeDrive(Speed, 0))
+        .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM))
+        .finallyDo(interuppted -> m_drive.stopMotor());
+      }
 
     @Override
     public void periodic() {
