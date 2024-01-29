@@ -4,7 +4,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
-//import edu.wpi.first.wpilibj.Encoder;
 import com.revrobotics.CANSparkMax;
 import java.util.function.DoubleSupplier;
 
@@ -35,13 +34,7 @@ public class Drivetrain extends SubsystemBase {
     rightMotor1.setInverted(true);
     leftMotor1.setInverted(false);
   }
-/* 
-  public Command arcadeDrive(double FWD, double Rotate){
-    return run(()->{
-      m_drive.arcadeDrive(FWD, Rotate);
-    });
-  }
-*/
+
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
     // A split-stick arcade command, with forward/backward controlled by the left
     // hand, and turning controlled by the right.
@@ -49,18 +42,7 @@ public class Drivetrain extends SubsystemBase {
         .withName("arcadeDrive");
   }
 
-/*
-  public Command driveDistanceCommand(double DistanceM, double Speed){
-    return runOnce(() -> {
-      m_RightEncoder.reset();
-      m_LeftEncoder.reset();
-    })
-    .andThen(run(() -> m_drive.arcadeDrive(Speed, 0))
-    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM))
-    .finallyDo(interuppted -> m_drive.stopMotor());
-     
-  }
-  */
+
   public Command driveRotateCommand(double degrees, double Speed){
     return runOnce(() ->{
         m_drive.arcadeDrive(Speed, degrees);

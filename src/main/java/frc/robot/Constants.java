@@ -23,7 +23,7 @@ public final class Constants {
   
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
-    public static final double k_intakeSpeed = .5;
+    public static final double k_intakeSpeed = 1;
     }
   
   public static class DrivetrainConstants {
