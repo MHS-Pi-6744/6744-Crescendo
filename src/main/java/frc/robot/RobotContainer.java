@@ -6,7 +6,7 @@ package frc.robot;
 
 
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Autos;
+//import frc.robot.commands.Autos;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -31,7 +31,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   // The autonomous routines
-  private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
+  //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,19 +40,12 @@ public class RobotContainer {
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
  
 public RobotContainer(){
-  // Configure the button bindings
+  // Configure the button bindings using method below
   configureButtonBindings();
-
-  // Configure default commands
-  // Set the default drive command to split-stick arcade drive
-  m_drive.setDefaultCommand(
-    m_drive.arcadeDrive( -m_driverController.getLeftY(),-m_driverController.getRightX())
-  );
-  
 
 
   // Add commands to the autonomous command chooser
-  m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
+  //m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
 
   // Put the chooser on the dashboard
   Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -61,6 +54,13 @@ public RobotContainer(){
   
 private void configureButtonBindings() {
     
+
+
+    // Configure default commands
+    // Set the default drive command to split-stick arcade drive
+    m_drive.setDefaultCommand(
+      m_drive.arcadeDriveCommand(
+      () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
 
     // Pickup a cube with the X button
     // m_driverController.x().whileTrue(m_intake.pickupCommand());
