@@ -12,11 +12,13 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -36,6 +38,9 @@ public class RobotContainer {
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+
+
+
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
  
@@ -48,7 +53,15 @@ public RobotContainer(){
   //m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
 
   // Put the chooser on the dashboard
+
+  //SmartDashboard.putNumber("EncoderValue", m_encoder.getPosition());
+  
   Shuffleboard.getTab("Autonomous").add(m_chooser);
+
+  
+  
+  //Shuffleboard.getTab("EncoderNum").addDouble("Encoder", m_encoder);
+ 
 
 }
   

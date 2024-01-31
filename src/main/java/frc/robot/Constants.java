@@ -15,6 +15,13 @@ package frc.robot;
 public final class Constants {
 
 
+  public static class SparkmaxArmConstants{
+    public static final int kSparkMaxCANID = 6;
+    
+    
+  }
+
+
   public static class UpperIntakeConstants {
     public static final int kArmMotorCANID = 7;
     public static final int kRightGateMotorCANID = 8;
@@ -22,8 +29,9 @@ public final class Constants {
   }
   
   public static class IntakeConstants {
-    public static final int Intake_CANID = 6;
+   // public static final int Intake_CANID = 6;
     public static final double k_intakeSpeed = .5;
+    public static final int Intake_CANID = 0;
     }
   
   public static class DrivetrainConstants {

@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,18 +18,24 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 
 public class ArmSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_armMotor = new WPI_TalonSRX(UpperIntakeConstants.kArmMotorCANID);
     private final CANSparkBase m_sparkMotor = new CANSparkMax(SparkmaxArmConstants.kSparkMaxCANID,MotorType.kBrushless);
 
-    private final RelativeEncoder m_encoder = m_sparkMotor.getEncoder();
-
    
 
+    public final RelativeEncoder m_encoder = m_sparkMotor.getEncoder();
 
+  
 
+    
 
     
 
@@ -37,22 +44,16 @@ public class ArmSubsystem extends SubsystemBase {
    
     static final double armSpeed = .25;
 
-    
-    
-
-
-    
-
-
-
-    
-
 
   
-    
 
-    
-    
+    /* 
+    class EncoderVal {
+      private ShuffleboardTab tab = Shuffleboard.getTab("Encoder");
+      private GenericEntry Encoder = tab.add("EncoderValue", m_encoder).getEntry();
+    }
+    */
+
     
     public Command retractArmCommand(){
         return startEnd(
@@ -80,5 +81,7 @@ public class ArmSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
+      SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
+      SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
     }
 }
