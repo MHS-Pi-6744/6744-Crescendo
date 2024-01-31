@@ -28,20 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_armMotor = new WPI_TalonSRX(UpperIntakeConstants.kArmMotorCANID);
     private final CANSparkBase m_sparkMotor = new CANSparkMax(SparkmaxArmConstants.kSparkMaxCANID,MotorType.kBrushless);
-
-   
-
     public final RelativeEncoder m_encoder = m_sparkMotor.getEncoder();
-
-  
-
-    
-
-    
-
-
-    
-   
     static final double armSpeed = .25;
 
 
@@ -67,21 +54,23 @@ public class ArmSubsystem extends SubsystemBase {
             () -> m_armMotor.stopMotor());
     }
 
-    /* 
-    public Command sparkMaxDistance(double DistanceM, double Speed){
-        return runOnce(() -> {
-          .reset();
-        })
-        .andThen(run(() -> m_sparkMotor(Speed, 0))
-        .until(() -> Math.max(m_Encoder.getDistance() >= DistanceM))
-        .finallyDo(interuppted -> m_sparkMotor.stopMotor()));
-      }
-      */
+    public void setPosition(){
+      double sparkPosition = SmartDashboard.getNumber("EnterPosition", 0.0);
+      m_sparkMotor.set(sparkPosition);
+    }
+
+    
+
+      
 
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
+
+
       SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
       SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+
+      setPosition();
     }
 }
