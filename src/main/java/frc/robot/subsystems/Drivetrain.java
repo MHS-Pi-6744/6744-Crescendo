@@ -7,33 +7,35 @@ import frc.robot.Constants.DrivetrainConstants;
 //import edu.wpi.first.wpilibj.Encoder;
 import com.revrobotics.CANSparkMax;
 import java.util.function.DoubleSupplier;
-
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
 public class Drivetrain extends SubsystemBase {
 
-  // The drive motors
-  private final CANSparkMax leftMotor1 = new CANSparkMax(DrivetrainConstants.kLeftMotorCANID, MotorType.kBrushless);
-  private final CANSparkMax leftMotor2 = new CANSparkMax(DrivetrainConstants.kLeftMotor2CANID, MotorType.kBrushless);
-  private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
-  private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
-
-  // The robot's drive
-  private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);
+  // Create Drive Motors
+  private final CANSparkMax m_leftLead = new CANSparkMax(DrivetrainConstants.kLeftMotorCANID, MotorType.kBrushless);
+  private final CANSparkMax m_leftFollow = new CANSparkMax(DrivetrainConstants.kLeftMotor2CANID, MotorType.kBrushless);
+  private final CANSparkMax m_rightLead = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
+  private final CANSparkMax m_rightFollow = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
+  // Create Encoders
+  public final RelativeEncoder e_rightEncoder = m_rightLead.getEncoder();
+  public final RelativeEncoder e_leftEncoder = m_leftLead.getEncoder();
+  // Create Drive
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLead,m_rightLead);
 
 
   /** Creates a new subsystem. */
   public Drivetrain() {
     
-    //This is the proper way to group CAN motors. See Spark-max example code - RM
-    leftMotor2.follow(leftMotor1);
-    rightMotor2.follow(rightMotor1);
+    // Make the follow motors follow the lead motor
+    m_leftFollow.follow(m_leftLead);
+    m_rightFollow.follow(m_rightLead);
     
-    //Flip values so robot moves forward when stick-forward/LEDs-green */
-    rightMotor1.setInverted(true);
-    leftMotor1.setInverted(false);
+    // Inverts 1 Motor to make the robot drive forward
+    m_rightLead.setInverted(true);
+    m_leftLead.setInverted(false);
   }
 /* 
   public Command arcadeDrive(double FWD, double Rotate){
@@ -48,19 +50,6 @@ public class Drivetrain extends SubsystemBase {
     return run(() -> m_drive.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble()))
         .withName("arcadeDrive");
   }
-
-/*
-  public Command driveDistanceCommand(double DistanceM, double Speed){
-    return runOnce(() -> {
-      m_RightEncoder.reset();
-      m_LeftEncoder.reset();
-    })
-    .andThen(run(() -> m_drive.arcadeDrive(Speed, 0))
-    .until(() -> Math.max(m_LeftEncoder.getDistance(), m_RightEncoder.getDistance()) >= DistanceM))
-    .finallyDo(interuppted -> m_drive.stopMotor());
-     
-  }
-  */
   public Command driveRotateCommand(double degrees, double Speed){
     return runOnce(() ->{
         m_drive.arcadeDrive(Speed, degrees);
