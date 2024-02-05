@@ -10,6 +10,7 @@ import java.util.function.DoubleSupplier;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -26,10 +27,10 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLead,m_rightLead);
 
 
-  /** Creates a new subsystem. */
+  // Creates a new subsystem.
   public Drivetrain() {
     
-    // Make the follow motors follow the lead motor
+    // Makes the follow motors follow the lead motor
     m_leftFollow.follow(m_leftLead);
     m_rightFollow.follow(m_rightLead);
     
@@ -45,8 +46,7 @@ public class Drivetrain extends SubsystemBase {
   }
 */
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
-    // A split-stick arcade command, with forward/backward controlled by the left
-    // hand, and turning controlled by the right.
+    // A split-stick arcade command, with forward/backward controlled by the left hand, and turning controlled by the right.
     return run(() -> m_drive.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble()))
         .withName("arcadeDrive");
   }
@@ -58,10 +58,21 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  public void setPosition(){
+  double drivePosition = SmartDashboard.getNumber("EnterPosition", 0.0);
+  m_leftLead.set(drivePosition);
+  m_rightLead.set(drivePosition);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    SmartDashboard.putNumber("Left Encoder Value", e_leftEncoder.getPosition());
+    SmartDashboard.putNumber("Left Encoder Velocity", e_leftEncoder.getVelocity());
+    SmartDashboard.putNumber("Right Encoder Value", e_rightEncoder.getPosition());
+    SmartDashboard.putNumber("Right Encoder Velocity", e_rightEncoder.getVelocity());
+    setPosition();
   }
 
 }

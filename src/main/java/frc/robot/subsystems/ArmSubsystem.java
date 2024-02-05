@@ -67,10 +67,8 @@ public class ArmSubsystem extends SubsystemBase {
     public void periodic() {
       // This method will be called once per scheduler run
 
-
       SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
       SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
-
       setPosition();
     }
 }
