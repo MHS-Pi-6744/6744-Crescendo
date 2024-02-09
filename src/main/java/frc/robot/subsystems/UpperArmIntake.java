@@ -24,18 +24,6 @@ public class UpperArmIntake extends SubsystemBase {
         m_UpperintakeMotorR.setInverted(true);
     
       }
-
- 
-
-   
-    
-
-
-
-
-
-
-
   
 /** Returns a command that runs the intake */
     public Command UpperpickupCommand() {
