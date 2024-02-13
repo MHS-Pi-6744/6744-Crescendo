@@ -6,6 +6,7 @@ package frc.robot;
 
 
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.RetractArmCommand;
 //import frc.robot.commands.Autos;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
@@ -27,9 +28,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drive = new Drivetrain();
-  private final IntakeSubsystem m_intake = new IntakeSubsystem();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private static final Drivetrain m_drive = new Drivetrain();
+  private static final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  
+  //private final RetractArmCommand retractArm = new RetractArmCommand();
+  //private static final DriveDistance  driveDistance = new DriveDistance(0,0);
+
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
 
@@ -68,6 +73,8 @@ private void configureButtonBindings() {
     // Shoot the cube with the Y button
     //m_driverController.y().whileTrue(m_intake.releaseCommand());
     m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
+
+    m_driverController.x().onTrue(new RetractArmCommand(m_armSubsystem));
 
 
     // Run the arm motor in reverse for x seconds

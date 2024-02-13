@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -32,17 +34,21 @@ public final class Constants {
     public static final int kRightMotorCANID = 3;
     public static final int kRightMotor2CANID = 4;
 
-    public static final int[] kLeftEncoderPort = {-1,-1};
-    public static final int[] kRightEncoderPort = {-1,-1};
-
     public static final boolean kLeftEncoderReversed = false;
     public static final boolean kRightEncoderrevesed = true;
 
-
-    public static final double wheelDiam = 0.15; //IN METERS
+    // Physical robot parameters
+    public static final int kEncoderCPR = 42;  // NEO motor encoder Counts per revolution
+    public static final double kGearRatio = 7.31; // Toughbox mini gear ratio
+    public static final double kWheelDiameter = Units.inchesToMeters(6);
     public static final double kEncoderDistancePerPulse = 
-    (wheelDiam * Math.PI) / (double) 1024; // Cycles per Rev 4 or 4096 idk 
-    
+    (kWheelDiameter * Math.PI) / (double) kEncoderCPR; // Cycles per Rev 4 or 4096 idk
+
+    // Encoder count conversion on the spark max for NEOs from rotations to SI units 
+    public static final double kEncoderDistanceConversionFactor = 
+    ((double) (Math.PI*kWheelDiameter)/(kGearRatio));
+    public static final double kEncoderVelocityConversionFactor = 
+    ((double) (Math.PI*kWheelDiameter)/(60*kGearRatio));
   }
   
   //Operator input constants - RM
