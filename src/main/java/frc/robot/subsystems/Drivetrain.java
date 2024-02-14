@@ -79,6 +79,10 @@ public class Drivetrain extends SubsystemBase {
     //drive.feed(); 
   }
 
+  public void arcadeDrive(double fwd, double rot) {
+    m_drive.arcadeDrive(fwd, rot);
+  }
+
   //Encoder Methods
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {

@@ -41,9 +41,7 @@ public final class Constants {
     public static final int kEncoderCPR = 42;  // NEO motor encoder Counts per revolution
     public static final double kGearRatio = 7.31; // Toughbox mini gear ratio
     public static final double kWheelDiameter = Units.inchesToMeters(6);
-    public static final double kEncoderDistancePerPulse = 
-    (kWheelDiameter * Math.PI) / (double) kEncoderCPR; // Cycles per Rev 4 or 4096 idk
-
+    
     // Encoder count conversion on the spark max for NEOs from rotations to SI units 
     public static final double kEncoderDistanceConversionFactor = 
     ((double) (Math.PI*kWheelDiameter)/(kGearRatio));
