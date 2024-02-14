@@ -12,6 +12,8 @@ import java.util.function.DoubleSupplier;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -103,19 +105,23 @@ public class Drivetrain extends SubsystemBase {
         .withName("arcadeDrive");
   }
 
-/* */
+/* 
   public Command driveRotateCommand(double degrees, double Speed){
     return runOnce(() ->{
         m_drive.arcadeDrive(Speed, degrees);
     })
     .finallyDo(interuppted -> m_drive.stopMotor());
-
   }
-
+*/
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    SmartDashboard.putNumber("Left Drive P",m_leftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Drive P", m_rightEncoder.getPosition());
+    SmartDashboard.putNumber("Left Drive V",m_leftEncoder.getVelocity());
+    SmartDashboard.putNumber("Right Drive V", m_rightEncoder.getVelocity());
 
     m_drive.feed(); // Used to stop safety error messages?
   }

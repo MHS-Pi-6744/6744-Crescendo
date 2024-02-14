@@ -7,11 +7,12 @@ package frc.robot;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.RetractArmCommand;
-//import frc.robot.commands.Autos;
+import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -33,7 +34,7 @@ public class RobotContainer {
   private static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  //private static final DriveDistance  driveDistance = new DriveDistance(0,0);
+  private final Command m_driveForward = new DriveDistance(24,.5, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -50,7 +51,8 @@ public RobotContainer(){
 
 
   // Add commands to the autonomous command chooser
-  //m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
+  m_chooser.setDefaultOption("Drive Distance", m_driveForward);
+  m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
   Shuffleboard.getTab("Autonomous").add(m_chooser);

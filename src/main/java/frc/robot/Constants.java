@@ -37,7 +37,7 @@ public final class Constants {
     public static final boolean kLeftEncoderReversed = false;
     public static final boolean kRightEncoderrevesed = true;
 
-    // Physical robot parameters
+// Physical robot parameters
     public static final int kEncoderCPR = 42;  // NEO motor encoder Counts per revolution
     public static final double kGearRatio = 7.31; // Toughbox mini gear ratio
     public static final double kWheelDiameter = Units.inchesToMeters(6);
