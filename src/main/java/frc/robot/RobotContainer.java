@@ -34,7 +34,7 @@ public class RobotContainer {
   private static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  private final Command m_driveForward = new DriveDistance(24,.5, m_drive);
+  private final Command m_driveDistance = new DriveDistance(2, .85, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -51,7 +51,7 @@ public RobotContainer(){
 
 
   // Add commands to the autonomous command chooser
-  m_chooser.setDefaultOption("Drive Distance", m_driveForward);
+  m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
@@ -69,20 +69,17 @@ private void configureButtonBindings() {
       m_drive.arcadeDriveCommand(
       () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
 
-    // Pickup a cube with the X button
-    // m_driverController.x().whileTrue(m_intake.pickupCommand());
-    m_driverController.rightTrigger().whileTrue(m_intake.pickupCommand());
-    // Shoot the cube with the Y button
-    //m_driverController.y().whileTrue(m_intake.releaseCommand());
+    
+    m_driverController.rightTrigger().whileTrue(m_intake.pickupCommand());   
     m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
 
     m_driverController.x().onTrue(new RetractArmCommand(m_armSubsystem));
 
 
     // Run the arm motor in reverse for x seconds
-    m_driverController.b().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
+    //m_driverController.b().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
     // Run the arm motor for x seconds
-    m_driverController.a().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
+    //m_driverController.a().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
    
   }
 

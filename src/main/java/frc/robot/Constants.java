@@ -17,10 +17,11 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
 
-  public static class UpperIntakeConstants {
+  public static class ArmConstants {
     public static final int kArmMotorCANID = 7;
-    public static final int kRightGateMotorCANID = 8;
-    public static final int kLeftGateMotorCANID = 9;
+    public static final int kArmMotor2CANID = 8;
+    //public static final int kRightGateMotorCANID = 8;
+    //public static final int kLeftGateMotorCANID = 9;
   }
   
   public static class IntakeConstants {

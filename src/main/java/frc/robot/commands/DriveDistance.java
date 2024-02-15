@@ -8,8 +8,8 @@ public class DriveDistance extends Command {
     private final double m_distance;
     private final double m_speed;
 
-    public DriveDistance(double inches, double speed, Drivetrain drive) {
-        m_distance = inches;
+    public DriveDistance(double meters, double speed, Drivetrain drive) {
+        m_distance = meters;
         m_speed = speed;
         m_drive = drive;
         addRequirements(m_drive);
