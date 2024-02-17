@@ -36,7 +36,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   //private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
- // private final raceIntakeCommand m_RaceIntake = new raceIntakeCommand();
+
 
   //private final RaceIntake m_Race = new RaceIntake();
   // The autonomous routines
@@ -55,7 +55,8 @@ public RobotContainer(){
   // Configure the button bindings using method below
   configureButtonBindings();
 
- // m_chooser.addOption("Race Intake", m_RaceIntake);
+  //m_chooser.setDefaultOption("pickup", m_intake);
+  
 
   // Add commands to the autonomous command chooser
   //m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
