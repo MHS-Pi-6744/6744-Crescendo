@@ -41,7 +41,7 @@ public class RobotContainer {
   private static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  private final Command m_driveDistance = new DriveDistance(2, .85, m_drive);
+  private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);

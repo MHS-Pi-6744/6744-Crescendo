@@ -40,7 +40,7 @@ public final class Constants {
 
 // Physical robot parameters
     public static final int kEncoderCPR = 42;  // NEO motor encoder Counts per revolution
-    public static final double kGearRatio = 7.31; // Toughbox mini gear ratio
+    public static final double kGearRatio = 8.48; // Toughbox mini gear ratio
     public static final double kWheelDiameter = Units.inchesToMeters(6);
     
     // Encoder count conversion on the spark max for NEOs from rotations to SI units 
