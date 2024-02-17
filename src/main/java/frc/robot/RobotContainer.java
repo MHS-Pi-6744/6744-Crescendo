@@ -50,6 +50,7 @@ public class RobotContainer {
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController2 = new CommandXboxController(OIConstants.kDriverController2Port);
  
 public RobotContainer(){
   // Configure the button bindings using method below
@@ -78,15 +79,15 @@ private void configureButtonBindings() {
 
     // Pickup a cube with the X button
     // m_driverController.x().whileTrue(m_intake.pickupCommand());
-    m_driverController.rightTrigger().whileTrue(m_intake.pickupCommand());
+    m_driverController2.rightTrigger().whileTrue(m_intake.pickupCommand());
     // Shoot the cube with the Y button
     //m_driverController.y().whileTrue(m_intake.releaseCommand());
-    m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
+    m_driverController2.leftTrigger().whileTrue(m_intake.releaseCommand());
     //m_driverController.rightBumper().whileTrue(m_intake.shooterCommand()).and(whileTrue(m_intake.pickupCommand()));
     //m_driverController.leftBumper().whileTrue(m_shoot.shooterCommand());
     //both shoot and pickup
-    m_driverController.rightBumper().whileTrue(new ParallelRaceGroup(m_intake.pickupCommand(), m_shoot.shooterCommand()));
-    m_driverController.leftBumper().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
+    m_driverController2.rightBumper().whileTrue(new ParallelRaceGroup(m_intake.pickupCommand(), m_shoot.shooterCommand()));
+    m_driverController2.leftBumper().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
 
 
 

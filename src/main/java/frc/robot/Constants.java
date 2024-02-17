@@ -49,7 +49,8 @@ public final class Constants {
   
  // Operator input constants - RM
   public static class OIConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort = 1;
+    public static final int kDriverController2Port = 0;
   }
 
   public static class AutoConstants {
