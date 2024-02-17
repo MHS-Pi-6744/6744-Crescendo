@@ -7,11 +7,4 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public final class Autos{
-    
-
-     public static Command dropAndGoAuto(Drivetrain m_myRobot, IntakeSubsystem m_IntakeSubsystem){
-        return Commands.sequence(
-            m_IntakeSubsystem.releaseCommand().withTimeout(5),
-            m_myRobot.driveRotateCommand(AutoConstants.kTimeoutSeconds, AutoConstants.kDriveSpeed));     
-        }
-}*/
+*/   

@@ -15,5 +15,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return startEnd(
                 () -> m_shooterMotor.set(IntakeConstants.k_intakeSpeed), 
                 () -> m_shooterMotor.stopMotor());
-    }           
+    }   
+    public Command shooterReleaseCommand() {
+        return startEnd(
+                () -> m_shooterMotor.set(-IntakeConstants.k_intakeSpeed), 
+                () -> m_shooterMotor.stopMotor());
+    }         
 }

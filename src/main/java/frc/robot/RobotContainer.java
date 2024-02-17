@@ -82,9 +82,10 @@ private void configureButtonBindings() {
     //m_driverController.y().whileTrue(m_intake.releaseCommand());
     m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
     //m_driverController.rightBumper().whileTrue(m_intake.shooterCommand()).and(whileTrue(m_intake.pickupCommand()));
-    m_driverController.leftBumper().whileTrue(m_shoot.shooterCommand());
+    //m_driverController.leftBumper().whileTrue(m_shoot.shooterCommand());
     //both shoot and pickup
     m_driverController.rightBumper().whileTrue(new ParallelRaceGroup(m_intake.pickupCommand(), m_shoot.shooterCommand()));
+    m_driverController.leftBumper().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
 
 
 
