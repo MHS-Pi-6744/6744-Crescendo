@@ -23,10 +23,10 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax leftMotor2 = new CANSparkMax(DrivetrainConstants.kLeftMotor2CANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
-
+  
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);
-
+  
   private final RelativeEncoder m_leftEncoder;
   private final RelativeEncoder m_rightEncoder;
 
