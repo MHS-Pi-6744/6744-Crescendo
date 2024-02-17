@@ -5,10 +5,8 @@ import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
 
-
-
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
 //import frc.robot.Constants;
@@ -18,11 +16,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * -RM */
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final WPI_TalonSRX m_intakeMotor = new WPI_TalonSRX(IntakeConstants.Intake_CANID);
+    private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
 
-  
-/** Returns a command that runs the intake */
+
+
+    /** Returns a command that runs the intake */
     public Command pickupCommand() {
         return startEnd(
                 // Start the intake motor
@@ -39,6 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Stop the motor when command ends
                 () -> m_intakeMotor.stopMotor());
         }
+
 
  @Override
   public void periodic() {

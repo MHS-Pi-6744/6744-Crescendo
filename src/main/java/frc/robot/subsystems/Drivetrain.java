@@ -30,6 +30,7 @@ public class Drivetrain extends SubsystemBase {
     //This is the proper way to group CAN motors. See Spark-max example code - RM
     leftMotor2.follow(leftMotor1);
     rightMotor2.follow(rightMotor1);
+
     
     //Flip values so robot moves forward when stick-forward/LEDs-green */
     rightMotor1.setInverted(true);

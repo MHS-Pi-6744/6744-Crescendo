@@ -15,15 +15,16 @@ package frc.robot;
 public final class Constants {
 
 
-  public static class UpperIntakeConstants {
+ /*  public static class UpperIntakeConstants {
     public static final int kArmMotorCANID = 7;
     public static final int kRightGateMotorCANID = 8;
     public static final int kLeftGateMotorCANID = 9;
   }
-  
+  */
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
-    public static final double k_intakeSpeed = .5;
+    public static final double k_intakeSpeed = 1;
+    public static final int Shooter_CANID = 5;
     }
   
   public static class DrivetrainConstants {
@@ -44,8 +45,9 @@ public final class Constants {
     (wheelDiam * Math.PI) / (double) 1024; // Cycles per Rev 4 or 4096 idk 
     
   }
+
   
-  //Operator input constants - RM
+ // Operator input constants - RM
   public static class OIConstants {
     public static final int kDriverControllerPort = 0;
   }
@@ -54,5 +56,4 @@ public final class Constants {
     public static final double kDriveSpeed = .5;
     public static final double kTimeoutSeconds = 3;
   }
-
 }
