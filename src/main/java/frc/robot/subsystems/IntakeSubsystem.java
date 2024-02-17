@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import frc.robot.Constants.IntakeConstants;
 
 
 //import frc.robot.Constants;
