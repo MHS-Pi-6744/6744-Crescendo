@@ -6,11 +6,13 @@ package frc.robot;
 
 
 import frc.robot.Constants.OIConstants;
-//import frc.robot.commands.Autos;
+import frc.robot.commands.RetractArmCommand;
+import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -27,9 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drive = new Drivetrain();
-  private final IntakeSubsystem m_intake = new IntakeSubsystem();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private static final Drivetrain m_drive = new Drivetrain();
+  private static final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  
+  //private final RetractArmCommand retractArm = new RetractArmCommand();
+  private final Command m_driveDistance = new DriveDistance(2, .85, m_drive);
+
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
 
@@ -45,7 +51,8 @@ public RobotContainer(){
 
 
   // Add commands to the autonomous command chooser
-  //m_chooser.setDefaultOption("Drop and Go", m_dropAndGo);
+  m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
+  m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
   Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -62,18 +69,17 @@ private void configureButtonBindings() {
       m_drive.arcadeDriveCommand(
       () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
 
-    // Pickup a cube with the X button
-    // m_driverController.x().whileTrue(m_intake.pickupCommand());
-    m_driverController.rightTrigger().whileTrue(m_intake.pickupCommand());
-    // Shoot the cube with the Y button
-    //m_driverController.y().whileTrue(m_intake.releaseCommand());
+    
+    m_driverController.rightTrigger().whileTrue(m_intake.pickupCommand());   
     m_driverController.leftTrigger().whileTrue(m_intake.releaseCommand());
+
+    m_driverController.x().onTrue(new RetractArmCommand(m_armSubsystem));
 
 
     // Run the arm motor in reverse for x seconds
-    m_driverController.b().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
+    //m_driverController.b().onTrue(m_armSubsystem.retractArmCommand().withTimeout(3));
     // Run the arm motor for x seconds
-    m_driverController.a().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
+    //m_driverController.a().onTrue(m_armSubsystem.extendArmCommand().withTimeout(3));
    
   }
 
