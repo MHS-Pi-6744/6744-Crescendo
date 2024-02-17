@@ -1,10 +1,12 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants.IntakeConstants;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 
@@ -18,8 +20,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
 
-  
-/** Returns a command that runs the intake */
+
+
+    /** Returns a command that runs the intake */
     public Command pickupCommand() {
         return startEnd(
                 // Start the intake motor
@@ -36,6 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Stop the motor when command ends
                 () -> m_intakeMotor.stopMotor());
         }
+
 
  @Override
   public void periodic() {
