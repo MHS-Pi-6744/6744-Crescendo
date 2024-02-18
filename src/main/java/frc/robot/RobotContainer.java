@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 ///*import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.DriveDistance;
+import frc.robot.commands.DriveRotate;
 //import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -45,7 +45,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
+  private final Command m_driveDistance = new DriveRotate(1, .3, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
