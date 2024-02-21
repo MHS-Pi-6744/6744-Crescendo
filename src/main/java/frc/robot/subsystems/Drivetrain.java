@@ -106,14 +106,6 @@ public class Drivetrain extends SubsystemBase {
         .withName("arcadeDrive");
   }
 
-/* 
-  public Command driveRotateCommand(double degrees, double Speed){
-    return runOnce(() ->{
-        m_drive.arcadeDrive(Speed, degrees);
-    })
-    .finallyDo(interuppted -> m_drive.stopMotor());
-  }
-*/
 
   @Override
   public void periodic() {
