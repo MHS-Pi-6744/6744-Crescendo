@@ -11,12 +11,19 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkRelativeEncoder;
+
+import edu.wpi.first.hal.HAL.SimPeriodicAfterCallback;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+
+
 
 /*  -----Need to set up second motor as a follower
  * 
@@ -37,7 +44,6 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
   private double m_feedforward;
-  private double m_setpointIntake;
   //private double m_manualValue;
 
 
@@ -47,6 +53,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
+
+   
+
+    
   
     // Create 2 SPARK MAX controllers   ----  Why inside the constructor instead of before as in Drivetrain???????
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
@@ -57,7 +67,7 @@ public class ArmSubsystem extends SubsystemBase {
     
     // Set forward direction
     m_leftmotor.setInverted(false);
-    m_rightmotor.setInverted(true);
+    m_rightmotor.setInverted(false);
  
     //Set the right motor to follow the left motor
     m_rightmotor.follow(m_leftmotor);
@@ -83,11 +93,11 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftencoder = m_leftmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_leftencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_leftencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_leftencoder.setPosition(0.0);
+    m_leftencoder.setPosition(0);
     m_rightencoder = m_rightmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_rightencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_rightencoder.setPosition(0.0);
+    m_rightencoder.setPosition(0);
 
     m_controller = m_leftmotor.getPIDController();
     PIDGains.setSparkMaxGains(m_controller, ArmConstants.kArmPositionGains);
@@ -97,12 +107,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     m_setpoint = ArmConstants.kHomePosition;
 
-    m_setpointIntake = ArmConstants.kIntakePosition;
 
     m_timer = new Timer();
     m_timer.start();
 
-    updateMotionProfile();
+   updateMotionProfile();
   }
 
   /**
@@ -118,13 +127,14 @@ public class ArmSubsystem extends SubsystemBase {
     }
   }
 
+/* 
   public Command CommandSetTargetPosition(){
     return this.runOnce(() -> setTargetPosition(m_setpoint));
   }
 
-  public void setIntakePosition(double _setpoint) {
-    if (_setpoint != m_setpointIntake) {
-      m_setpointIntake = _setpoint;
+  public void setIntakePosition(double m_setpointIntake) {
+    if (m_setpoint != m_setpointIntake) {
+        m_setpoint = m_setpointIntake;
       updateMotionProfile();
     }
   }
@@ -133,7 +143,7 @@ public class ArmSubsystem extends SubsystemBase {
     return this.runOnce(() -> setIntakePosition(m_setpoint));
   }
 
-
+*/
 
 
 
@@ -192,5 +202,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Encoder Position", m_leftencoder.getPosition());
+    SmartDashboard.putNumber("Right Encoder Position", m_rightencoder.getPosition());
+    SmartDashboard.putNumber("SetPoint", m_setpoint);
+
+    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kIntakePosition);
+    SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+    
+    
+   
   }
 }

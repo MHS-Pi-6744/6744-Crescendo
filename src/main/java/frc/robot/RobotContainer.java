@@ -44,7 +44,7 @@ public class RobotContainer {
  
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
+ // private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -69,11 +69,11 @@ public RobotContainer(){
   
 
   // Add commands to the autonomous command chooser
-  m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
-  m_chooser.addOption("Nothing", new WaitCommand(5));
+ // m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
+  //m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
-  Shuffleboard.getTab("Autonomous").add(m_chooser);
+  //Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
   m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
@@ -88,9 +88,9 @@ private void configureButtonBindings() {
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
-    m_drive.setDefaultCommand(
-      m_drive.arcadeDriveCommand(
-      () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
+    //m_drive.setDefaultCommand(
+      ////m_drive.arcadeDriveCommand(
+     // () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
 
     // Pickup a note with the right trigger
     /* 
@@ -102,12 +102,13 @@ private void configureButtonBindings() {
     */
 
     // Go to home position
-    m_driverController2.y().onTrue(m_arm.CommandSetTargetPosition());
-    m_driverController2.a().onTrue(m_arm.CommandSetShootPosition());
+    
 
     // Go to scoring position
-  
+    m_driverController.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
 
+    m_driverController.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kHomePosition)));
+    
 
     
 

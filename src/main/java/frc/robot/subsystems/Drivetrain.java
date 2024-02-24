@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class Drivetrain extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {/* 
 
   // The drive motors
   private final CANSparkMax leftMotor1 = new CANSparkMax(DrivetrainConstants.kLeftMotorCANID, MotorType.kBrushless);
@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private final RelativeEncoder m_leftEncoder;
   private final RelativeEncoder m_rightEncoder;
 
-  /** Creates a new subsystem. */
+ 
   public Drivetrain() {
 
     // idle(); Create method
@@ -44,8 +44,7 @@ public class Drivetrain extends SubsystemBase {
     leftMotor2.follow(leftMotor1);
     rightMotor2.follow(rightMotor1);
 
-    
-    //Flip values so robot moves forward when stick-forward/LEDs-green */
+ 
     rightMotor1.setInverted(true);
     leftMotor1.setInverted(false);
 
@@ -87,7 +86,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   //Encoder Methods
-  /** Resets the drive encoders to currently read a position of 0. */
+ 
   public void resetEncoders() {
     m_leftEncoder.setPosition(0);
     m_rightEncoder.setPosition(0);
@@ -118,5 +117,5 @@ public class Drivetrain extends SubsystemBase {
 
     m_drive.feed(); // Used to stop safety error messages?
   }
-
+*/
 }

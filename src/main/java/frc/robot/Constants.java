@@ -26,7 +26,7 @@ public final class Constants {
     public static final int kRightMotor2CANID = 4;
 
     public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderrevesed = true;
+    public static final boolean kRightEncoderrevesed = false;
 
 // Physical robot parameters
     public static final int kEncoderCPR = 42;  // Drivetrain NEO motor encoder Counts per revolution
@@ -42,16 +42,16 @@ public final class Constants {
   }
 
 public static final class ArmConstants {     // Is the final needed here?????
-    public static final int kLeftArmCanId = 5;
-    public static final boolean kLeftArmInverted = true;
-    public static final int kRightArmCanId = 6;
+    public static final int kLeftArmCanId = 1;
+    public static final boolean kLeftArmInverted = false;
+    public static final int kRightArmCanId = 2;
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = -1.15;
-    public static final double kSoftLimitForward = 0.0;
+    public static final double kSoftLimitReverse = -100;
+    public static final double kSoftLimitForward = 100;
 
-    public static final double kArmGearRatio = (1.0 / 60);
+    public static final double kArmGearRatio = 8.48;
     public static final double kPositionFactor =
         kArmGearRatio
             * 2.0
@@ -62,14 +62,14 @@ public static final class ArmConstants {     // Is the final needed here?????
         1.342; // radians to add to converted arm position to get real-world arm position (starts at
     // ~76.9deg angle)
     public static final ArmFeedforward kArmFeedforward =
-        new ArmFeedforward(0.0, 3.0, 12.0 / kArmFreeSpeed, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(2.5, 0.0, 0.0);
+        new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+    public static final PIDGains kArmPositionGains = new PIDGains(0.2, 0.0, 0.0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
         new TrapezoidProfile.Constraints(1.0, 2.0);
 
-    public static final double kHomePosition = 400;
-    public static final double kScoringPosition = 600;
-    public static final double kIntakePosition = 1000;
+    public static final double kHomePosition = 0;
+    public static final double kScoringPosition = 0;
+    public static final double kIntakePosition = 0;
   }
 
 // ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr
