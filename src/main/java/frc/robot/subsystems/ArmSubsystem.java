@@ -43,17 +43,21 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_startState;
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
-  /*private double m_feedforward;
+
+  //private double m_feedforward;
 
    // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
-    m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
-    m_rightmotor = new CANSparkMax(ArmConstants.kRightArmCanId, MotorType.kBrushless);
 
+    
  
 
   /** Creates and initializes a new ArmSubsystem. */
   public ArmSubsystem() {
   
+    m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
+    m_rightmotor = new CANSparkMax(ArmConstants.kRightArmCanId, MotorType.kBrushless);
+
+
     m_leftmotor.restoreFactoryDefaults();  
     m_rightmotor.restoreFactoryDefaults();
     

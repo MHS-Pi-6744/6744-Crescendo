@@ -62,12 +62,12 @@ public static final class ArmConstants {     // Is the final needed here?????
     // ~76.9deg angle)
     public static final ArmFeedforward kArmFeedforward =
         new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(0.2, 0.0, 0.0);
+    public static final PIDGains kArmPositionGains = new PIDGains(0.02, 0.0, 0.0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
         new TrapezoidProfile.Constraints(1.0, 2.0);
 
     public static final double kHomePosition = 0;
-    public static final double kScoringPosition = 2;
+    public static final double kScoringPosition = 200;
     
   }
 
