@@ -12,12 +12,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkRelativeEncoder;
 
-import edu.wpi.first.hal.HAL.SimPeriodicAfterCallback;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
 import frc.robot.Constants;
@@ -210,6 +207,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+
     
     
    
