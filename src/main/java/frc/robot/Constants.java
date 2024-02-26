@@ -48,15 +48,14 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = -100;
-    public static final double kSoftLimitForward = 100;
+    public static final double kSoftLimitReverse = -1000;
+    public static final double kSoftLimitForward = 1000;
 
     public static final double kArmGearRatio = 8.48;
-    public static final double kPositionFactor =
-        kArmGearRatio
-            * 2.0
-            * Math.PI; // multiply SM (rotation in from SmartMax? Units?) value by this number and get arm position in radians
-    public static final double kVelocityFactor = kArmGearRatio * 2.0 * Math.PI / 60.0;
+    public static final double kPositionFactor = kArmGearRatio;
+    //        * 2.0
+    //        * Math.PI; // multiply SM (rotation in from SmartMax? Units?) value by this number and get arm position in radians
+    public static final double kVelocityFactor = kArmGearRatio / 60.0;
     public static final double kArmFreeSpeed = 5676.0 * kVelocityFactor;
     public static final double kArmZeroCosineOffset =
         1.342; // radians to add to converted arm position to get real-world arm position (starts at
@@ -68,8 +67,8 @@ public static final class ArmConstants {     // Is the final needed here?????
         new TrapezoidProfile.Constraints(1.0, 2.0);
 
     public static final double kHomePosition = 0;
-    public static final double kScoringPosition = 0;
-    public static final double kIntakePosition = 0;
+    public static final double kScoringPosition = 2;
+    
   }
 
 // ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr

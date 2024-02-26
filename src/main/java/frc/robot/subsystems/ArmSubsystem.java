@@ -43,26 +43,18 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_startState;
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
-  private double m_feedforward;
-  //private double m_manualValue;
+  /*private double m_feedforward;
 
-
-
-
-
-
-  /** Creates a new ArmSubsystem. */
-  public ArmSubsystem() {
-
-   
-
-    
-  
-    // Create 2 SPARK MAX controllers   ----  Why inside the constructor instead of before as in Drivetrain???????
+   // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
     m_rightmotor = new CANSparkMax(ArmConstants.kRightArmCanId, MotorType.kBrushless);
 
-    m_leftmotor.restoreFactoryDefaults();  //Does this restore to the defaults that are burned manually or default as shipped?????
+ 
+
+  /** Creates and initializes a new ArmSubsystem. */
+  public ArmSubsystem() {
+  
+    m_leftmotor.restoreFactoryDefaults();  
     m_rightmotor.restoreFactoryDefaults();
     
     // Set forward direction
@@ -107,17 +99,17 @@ public class ArmSubsystem extends SubsystemBase {
 
     m_setpoint = ArmConstants.kHomePosition;
 
-
     m_timer = new Timer();
     m_timer.start();
 
-   updateMotionProfile();
+    updateMotionProfile();
+
   }
 
   /**
    * Sets the target position and updates the motion profile if the target position changed.
    *
-   * @param _setpoint The new target position in radians.
+   * @param _setpoint The new target position in wheel revolutions.
    */
   
   public void setTargetPosition(double _setpoint) {
@@ -172,12 +164,14 @@ public class ArmSubsystem extends SubsystemBase {
     } else {
       m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
     }
-
+    /* Turn off feed forward 
     m_feedforward =
         ArmConstants.kArmFeedforward.calculate(
             m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
+            */
+
     m_controller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, m_feedforward);
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
   /**
@@ -191,13 +185,17 @@ public class ArmSubsystem extends SubsystemBase {
     // passively
     m_setpoint = m_leftencoder.getPosition();
     updateMotionProfile();
+
     // update the feedforward variable with the newly zero target velocity
+    /* Turn off feed forward 
     m_feedforward =
         ArmConstants.kArmFeedforward.calculate(
             m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
+            */
+
     // set the power of the motor
-    m_leftmotor.set(_power + (m_feedforward / 12.0));
-    //  m_manualValue = _power; // this variable is only used for logging or debugging if needed
+    m_leftmotor.set(_power);
+   
   }
 
   @Override
@@ -206,7 +204,7 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Encoder Position", m_rightencoder.getPosition());
     SmartDashboard.putNumber("SetPoint", m_setpoint);
 
-    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kIntakePosition);
+    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
     
     
