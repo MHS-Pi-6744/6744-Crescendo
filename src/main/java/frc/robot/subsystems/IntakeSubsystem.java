@@ -14,7 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
  * -RM */
 
 public class IntakeSubsystem extends SubsystemBase {
-        /* 
+        
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
 
@@ -36,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Stop the motor when command ends
                 () -> m_intakeMotor.stopMotor());
         }
-        */
+        
 
 
  @Override

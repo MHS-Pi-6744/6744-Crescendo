@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class Drivetrain extends SubsystemBase {/* 
+public class Drivetrain extends SubsystemBase {
 
   // The drive motors
   private final CANSparkMax leftMotor1 = new CANSparkMax(DrivetrainConstants.kLeftMotorCANID, MotorType.kBrushless);
@@ -117,5 +117,5 @@ public class Drivetrain extends SubsystemBase {/*
 
     m_drive.feed(); // Used to stop safety error messages?
   }
-*/
+
 }
