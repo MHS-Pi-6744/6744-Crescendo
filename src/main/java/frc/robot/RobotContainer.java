@@ -34,6 +34,7 @@ public class RobotContainer {
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
   private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
+  // negative speed moves backwards
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
