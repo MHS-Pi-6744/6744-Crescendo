@@ -9,7 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final CANSparkMax m_shooterMotor = new CANSparkMax(IntakeConstants.Shooter_CANID, MotorType.kBrushed);
+    private final CANSparkMax m_shooterMotor = new CANSparkMax(IntakeConstants.Shooter_CANID, MotorType.kBrushless);
 
     public Command shooterCommand() {
         return startEnd(
