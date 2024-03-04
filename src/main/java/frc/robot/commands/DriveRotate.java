@@ -1,7 +1,15 @@
+
+
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+
+void moveForRotations(rotationDegrees){
+    Motor.rotateFor(rotationDegrees, rotationUnits::deg);
+}
+
+/*
 
 public class DriveRotate extends Command {
     private final Drivetrain m_drive;
@@ -39,3 +47,5 @@ public class DriveRotate extends Command {
 
     
 }
+
+*/
