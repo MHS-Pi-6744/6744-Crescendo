@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
@@ -17,6 +18,16 @@ public class IntakeSubsystem extends SubsystemBase {
         
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
+/*public IntakeSubsystem() {
+
+    m_intakeMotor.restoreFactoryDefaults();
+
+    m_intakeMotor.setIdleMode(IdleMode.kBrake);
+
+    //m_intakeMotor.setSmartCurrentLimit(30, 30);
+
+    m_intakeMotor.burnFlash();
+}*/
 
 
 

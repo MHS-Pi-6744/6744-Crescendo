@@ -42,9 +42,9 @@ public final class Constants {
   }
 
 public static final class ArmConstants {     // Is the final needed here?????
-    public static final int kLeftArmCanId = 1;
+    public static final int kLeftArmCanId = 7;
     public static final boolean kLeftArmInverted = false;
-    public static final int kRightArmCanId = 2;
+    public static final int kRightArmCanId = 8;
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
@@ -74,9 +74,9 @@ public static final class ArmConstants {     // Is the final needed here?????
 // ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr
 //          Should this class name be something like I-SConstants???????
   public static class IntakeConstants {
-    public static final int Intake_CANID = 7;
+    public static final int Intake_CANID = 6;
     public static final double k_intakeSpeed = 1;
-    public static final int Shooter_CANID = 8;
+    public static final int Shooter_CANID = 5;
   }
   
 
