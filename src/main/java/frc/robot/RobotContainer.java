@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -47,7 +48,8 @@ public class RobotContainer {
   private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
   // negative speed moves backwards
 
-  private final Command m_driveRotation = new DriveRotation(1, .3, m_drive);
+  private final Command m_driveRotation = new DriveRotation(0.5, .3, m_drive);
+  // Positive speed goes right 
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -79,7 +81,7 @@ public RobotContainer(){
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
-  //Shuffleboard.getTab("Autonomous").add(m_chooser);
+  Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
