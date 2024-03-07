@@ -100,7 +100,19 @@ public class Drivetrain extends SubsystemBase {
   public double getAverageEncoderDistance() {
     return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
   }
+  public double getLeftEncoderDistance() {
+    return (m_leftEncoder.getPosition());
+  }
+  public double getRightEncoderDistance() {
+    return (m_rightEncoder.getPosition());
+  }
 
+
+  //This gets the average of the total distance of the encoders
+  //Ex: Rencoder=3 and Lencoder=-3 returns 3
+  public double getAbsoluteAverageEncoderDistance() {
+    return ((Math.abs(m_rightEncoder.getPosition()) + Math.abs(m_leftEncoder.getPosition()) / 2.0));
+  }
 
   // Teleop default drive command
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {

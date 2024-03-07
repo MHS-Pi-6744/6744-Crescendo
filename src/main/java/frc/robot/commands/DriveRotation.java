@@ -1,23 +1,15 @@
-
-
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
-void moveForRotations(rotationDegrees){
-    Motor.rotateFor(rotationDegrees, rotationUnits::deg);
-}
-
-/*
-
-public class DriveRotate extends Command {
+public class DriveRotation extends Command {
     private final Drivetrain m_drive;
-    private final double m_distance;
+    private final double m_rotation;
     private final double m_speed;
 
-    public DriveRotate(double meters, double speed, Drivetrain drive) {
-        m_distance = meters;
+    public DriveRotation(double rotations, double speed, Drivetrain drive) {
+        m_rotation = rotations;
         m_speed = speed;
         m_drive = drive;
         addRequirements(m_drive);
@@ -41,11 +33,7 @@ public class DriveRotate extends Command {
   
     @Override
     public boolean isFinished() {
-      return Math.abs(m_drive.getAverageEncoderDistance()) >= m_distance;
+      return Math.abs(m_drive.getAbsoluteAverageEncoderDistance()) >= m_rotation;
     }
 
-
-    
 }
-
-*/

@@ -8,32 +8,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 ///*import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.DriveRotate;
+import frc.robot.commands.DriveRotation;
 //import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
@@ -57,8 +44,10 @@ public class RobotContainer {
  
   
   //private final RetractArmCommand retractArm = new RetractArmCommand();
-  private final Command m_driveDistance = new DriveRotate(1, .3, m_drive);
+  private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
   // negative speed moves backwards
+
+  private final Command m_driveRotation = new DriveRotation(1, .3, m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -86,6 +75,7 @@ public RobotContainer(){
 
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
+  m_chooser.addOption("Drive Rotations", m_driveRotation);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
