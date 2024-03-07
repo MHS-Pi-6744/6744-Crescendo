@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -36,7 +37,8 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Start the intake motor
                 () -> m_intakeMotor.set(IntakeConstants.k_intakeSpeed), 
                 // Stop the motor when command ends
-                () -> m_intakeMotor.stopMotor()); 
+                () -> m_intakeMotor.set(0)); 
+        
         }
 
 
@@ -45,7 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Start the intake motor in reverse. se
                 () -> m_intakeMotor.set(-IntakeConstants.k_intakeSpeed), 
                 // Stop the motor when command ends
-                () -> m_intakeMotor.stopMotor());
+                () -> m_intakeMotor.set(0));
         }
         
 
