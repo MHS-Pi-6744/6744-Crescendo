@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.lib.PIDGains;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,20 +19,6 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
 
-
- /*  public static class UpperIntakeConstants {
-    public static final int kArmMotorCANID = 7;
-    public static final int kArmMotor2CANID = 8;
-    public static final int kRightGateMotorCANID = 8;
-    public static final int kLeftGateMotorCANID = 9;
-  }
-  */
-  public static class IntakeConstants {
-    public static final int Intake_CANID = 6;
-    public static final double k_intakeSpeed = 1;
-    public static final int Shooter_CANID = 5;
-    }
-  
   public static class DrivetrainConstants {
     public static final int kLeftMotorCANID = 1;
     public static final int kLeftMotor2CANID = 2;
@@ -37,12 +26,13 @@ public final class Constants {
     public static final int kRightMotor2CANID = 4;
 
     public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderrevesed = true;
+    public static final boolean kRightEncoderrevesed = false;
 
 // Physical robot parameters
-    public static final int kEncoderCPR = 42;  // NEO motor encoder Counts per revolution
-    public static final double kGearRatio = 8.48; // Toughbox mini gear ratio
+    public static final int kEncoderCPR = 42;  // Drivetrain NEO motor encoder Counts per revolution
+    public static final double kGearRatio = 8.48; // Drivetrain toughbox mini gear ratio
     public static final double kWheelDiameter = Units.inchesToMeters(6);
+    
     
     // Encoder count conversion on the spark max for NEOs from rotations to SI units 
     public static final double kEncoderDistanceConversionFactor = 
@@ -50,6 +40,47 @@ public final class Constants {
     public static final double kEncoderVelocityConversionFactor = 
     ((double) (Math.PI*kWheelDiameter)/(60*kGearRatio));
   }
+
+public static final class ArmConstants {     // Is the final needed here?????
+    public static final int kLeftArmCanId = 7;
+    public static final boolean kLeftArmInverted = false;
+    public static final int kRightArmCanId = 8;
+    public static final boolean kRightArmInverted = false;
+    public static final int kArmCurrentLimit = 40;
+
+    public static final double kSoftLimitReverse = -1000;
+    public static final double kSoftLimitForward = 1000;
+
+    public static final double kArmGearRatio = 8.48;
+    public static final double kPositionFactor = kArmGearRatio;
+    //        * 2.0
+    //        * Math.PI; // multiply SM (rotation in from SmartMax? Units?) value by this number and get arm position in radians
+    public static final double kVelocityFactor = kArmGearRatio / 60.0;
+    public static final double kArmFreeSpeed = 5676.0 * kVelocityFactor;
+    public static final double kArmZeroCosineOffset =
+        1.342; // radians to add to converted arm position to get real-world arm position (starts at
+    // ~76.9deg angle)
+    public static final ArmFeedforward kArmFeedforward =
+        new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+    public static final PIDGains kArmPositionGains = new PIDGains(0.0001, 0.0, 0);
+    public static final TrapezoidProfile.Constraints kArmMotionConstraint =
+        new TrapezoidProfile.Constraints(0.8, 0.01);
+
+    public static final double kHomePosition = 0;
+    public static final double kScoringPosition = 1000;
+    
+  }
+
+// ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr
+//          Should this class name be something like I-SConstants???????
+  public static class IntakeConstants {
+    public static final int Intake_CANID = 6;
+    public static final double k_intakeSpeed = 1;
+    public static final int Shooter_CANID = 5;
+  }
+  
+
+
 
   
  // Operator input constants - RM

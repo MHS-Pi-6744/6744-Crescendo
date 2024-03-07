@@ -6,23 +6,31 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import frc.robot.Constants.IntakeConstants;
 
-
-//import frc.robot.Constants;
 
 /**The following is an example of using the INLINE method of calling commands. A seperate command file is not required.
  * See frc.robot.subsystems; 
  * -RM */
 
 public class IntakeSubsystem extends SubsystemBase {
+        
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
+/*public IntakeSubsystem() {
+
+    m_intakeMotor.restoreFactoryDefaults();
+
+    m_intakeMotor.setIdleMode(IdleMode.kBrake);
+
+    //m_intakeMotor.setSmartCurrentLimit(30, 30);
+
+    m_intakeMotor.burnFlash();
+}*/
 
 
 
-    /** Returns a command that runs the intake */
     public Command pickupCommand() {
         return startEnd(
                 // Start the intake motor
@@ -31,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 () -> m_intakeMotor.stopMotor()); 
         }
 
-/** Returns a command that runs the intake in the opposite direction */
+
     public Command releaseCommand() {
         return startEnd(
                 // Start the intake motor in reverse. se
@@ -39,6 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 // Stop the motor when command ends
                 () -> m_intakeMotor.stopMotor());
         }
+        
 
 
  @Override
