@@ -23,7 +23,7 @@ public class DriveRotation extends Command {
   
     @Override
     public void execute() {
-      m_drive.arcadeDrive(m_speed, 0);
+      m_drive.arcadeDrive(0, m_speed);
     }
   
     @Override
