@@ -4,10 +4,13 @@ package frc.robot.subsystems;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkRelativeEncoder;
 
 
 /**The following is an example of using the INLINE method of calling commands. A seperate command file is not required.
@@ -17,17 +20,18 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class IntakeSubsystem extends SubsystemBase {
         
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
-    
-/*public IntakeSubsystem() {
 
-    m_intakeMotor.restoreFactoryDefaults();
+    private final RelativeEncoder m_intakeEncoder;
 
+public IntakeSubsystem() {
+
+    m_intakeEncoder = m_intakeMotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+   
+    /* m_intakeMotor.restoreFactoryDefaults();
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
-
-    //m_intakeMotor.setSmartCurrentLimit(30, 30);
-
-    m_intakeMotor.burnFlash();
-}*/
+    m_intakeMotor.setSmartCurrentLimit(30, 30);
+    m_intakeMotor.burnFlash(); */
+}
 
 
 
@@ -53,6 +57,16 @@ public class IntakeSubsystem extends SubsystemBase {
  @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
+    m_intakeMotor.getOutputCurrent();
+    ;
+
+    SmartDashboard.putNumber("Intake Motor Output", m_intakeMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Intake Motor Current", m_intakeMotor.getOutputCurrent());
+
+    SmartDashboard.putNumber("Intake Motor P",m_intakeEncoder.getPosition());
+    SmartDashboard.putNumber("Intake Motor V",m_intakeEncoder.getVelocity());
+    
+
   }
 }
- 

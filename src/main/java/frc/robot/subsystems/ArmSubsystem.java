@@ -43,8 +43,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   //private double m_feedforward;
 
-   // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
-
     
  
 
@@ -201,15 +199,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoder Position", m_leftencoder.getPosition());
-    SmartDashboard.putNumber("Right Encoder Position", m_rightencoder.getPosition());
-    SmartDashboard.putNumber("SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Left Arm Encoder Position", m_leftencoder.getPosition());
+    SmartDashboard.putNumber("Right Arm Encoder Position", m_rightencoder.getPosition());
+    SmartDashboard.putNumber("Left Arm V",m_leftencoder.getVelocity());
+    SmartDashboard.putNumber("Right Arm V", m_rightencoder.getVelocity());
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
 
-    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
-    SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+    SmartDashboard.getNumber(" Get Arm Intake Position", Constants.ArmConstants.kScoringPosition);
+    SmartDashboard.getNumber(" Get Arm Home Position", Constants.ArmConstants.kHomePosition);
 
-    
-    
-   
   }
 }
