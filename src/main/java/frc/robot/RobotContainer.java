@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -42,9 +43,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
- 
   
-  //private final RetractArmCommand retractArm = new RetractArmCommand();
   private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
   // negative speed moves backwards
 
@@ -54,7 +53,6 @@ public class RobotContainer {
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
   
-
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -72,9 +70,9 @@ public RobotContainer(){
   // Configure the button bindings using method below
   configureButtonBindings();
 
-
+  // Put the chooser on the dashboard
+  Shuffleboard.getTab("Autonomous").add(m_chooser);
   
-
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Drive Rotations", m_driveRotation);
@@ -82,6 +80,7 @@ public RobotContainer(){
 
   // Put the chooser on the dashboard
   Shuffleboard.getTab("Autonomous").add(m_chooser);
+
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
@@ -107,7 +106,7 @@ private void configureButtonBindings() {
                 () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX())); 
 
     // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
-        m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+      m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
 
     
@@ -121,12 +120,12 @@ private void configureButtonBindings() {
     m_driverController2.rightBumper().whileTrue(new ParallelRaceGroup(m_intake.pickupCommand(), m_shoot.shooterCommand()));
     m_driverController2.leftBumper().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
     
-
     // Move arm to home position with controller 2 Y button  ----- changed to controller 2  MitchSr
-        m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kHomePosition)));
+    m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kHomePosition)));
 
     // Move arm to scoring position with controller 2 A button
-        m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
+    m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
+
 
 }
 

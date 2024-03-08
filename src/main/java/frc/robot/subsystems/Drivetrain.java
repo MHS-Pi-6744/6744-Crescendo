@@ -86,6 +86,7 @@ public class Drivetrain extends SubsystemBase {
     //drive.feed(); 
   }
 
+  // not used? - RM
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
   }
