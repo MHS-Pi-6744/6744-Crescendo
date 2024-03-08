@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 ///*import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveRotation;
+import frc.robot.commands.TestAuto;
 //import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -49,6 +50,7 @@ public class RobotContainer {
 
   private final Command m_driveRotation = new DriveRotation(0.5, .3, m_drive);
   // Positive speed goes right 
+  private final Command m_autoTest = new TestAuto(m_drive);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -76,6 +78,7 @@ public RobotContainer(){
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Drive Rotations", m_driveRotation);
+  m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   // Put the chooser on the dashboard
