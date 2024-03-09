@@ -75,10 +75,15 @@ public static final class ArmConstants {     // Is the final needed here?????
 //          Should this class name be something like I-SConstants???????
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
-    public static final double k_intakeSpeed = 0.5;
+    public static final double k_intakeSpeed = 0.7;
     public static final int Shooter_CANID = 5;
     public static final double k_shooterSpeed = 0.5;
+    public static final double k_slowShooter = 0.1;
   }
+  /*public static class ClimberConstants {
+    public static final int Climber_CANID = 10;
+    public static final double k_climbSpeed = 1.0;
+  }*/
   
 
 
@@ -86,8 +91,8 @@ public static final class ArmConstants {     // Is the final needed here?????
   
  // Operator input constants - RM
   public static class OIConstants {
-    public static final int kDriverControllerPort = 1;
-    public static final int kDriverController2Port = 0;
+    public static final int kDriverControllerPort = 0;
+    public static final int kDriverController2Port = 1;
   }
 
   public static class AutoConstants {

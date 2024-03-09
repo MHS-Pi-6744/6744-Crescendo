@@ -38,6 +38,11 @@ public ShooterSubsystem() {
                 () -> m_shooterMotor.set(IntakeConstants.k_shooterSpeed), 
                 () -> m_shooterMotor.set(0));
     }   
+    public Command slowShooterCommand() {
+        return startEnd(
+                () -> m_shooterMotor.set(IntakeConstants.k_slowShooter), 
+                () -> m_shooterMotor.set(0));
+    }   
     public Command shooterReleaseCommand() {
         return startEnd(
                 () -> m_shooterMotor.set(-IntakeConstants.k_shooterSpeed), 

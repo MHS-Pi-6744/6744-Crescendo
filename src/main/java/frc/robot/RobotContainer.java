@@ -99,11 +99,12 @@ private void configureButtonBindings() {
 
     
     // Pickup a note with controller 2 right trigger
-    m_driverController2.leftBumper().whileTrue(m_intake.pickupCommand().withTimeout(0.5));
+    m_driverController2.leftBumper().whileTrue(m_intake.pickupCommand().withTimeout(0.5).alongWith(m_shoot.slowShooterCommand().withTimeout(0.5)));
 
     //Shoot note with controller 2 bumpers both shoot and pickup
     m_driverController2.rightBumper().whileTrue(new ParallelRaceGroup(m_shoot.shooterCommand(), m_intake.pickupCommand()));
 
+    //Drop note if stuck
     m_driverController2.b().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
     
     // Move arm to home position with controller 2 Y button  ----- changed to controller 2  MitchSr
