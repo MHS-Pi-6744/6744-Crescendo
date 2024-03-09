@@ -108,8 +108,12 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
+    /* DOES NOT WORK 
+
     m_Leftcontroller.setOutputRange(0, 0.5);
     m_Rightcontroller.setOutputRange(0, 0.5);
+
+    */
 
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
