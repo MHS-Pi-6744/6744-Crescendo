@@ -5,23 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-//import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-///*import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveRotation;
 import frc.robot.commands.TestAuto;
 import frc.robot.subsystems.ArmSubsystem;
-//import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -44,14 +39,12 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
-  double k_autoSpeed = 0.3;
-  double k_roto = 2.5;
-  double k_moto = 0.5;
+  
 
-  private final Command m_driveDistance = new DriveDistance(k_moto, k_autoSpeed, m_drive);
+  private final Command m_driveDistance = new DriveDistance(m_drive.k_moto, m_drive.k_autoSpeed, m_drive);
   // negative speed moves backwards
 
-  private final Command m_driveRotation = new DriveRotation(k_roto, k_autoSpeed, m_drive);
+  private final Command m_driveRotation = new DriveRotation(m_drive.k_roto, m_drive.k_autoSpeed, m_drive);
   // Positive speed goes right 
   private final Command m_autoTest = new TestAuto(m_drive);
 
@@ -82,17 +75,6 @@ public RobotContainer(){
   m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
-  SmartDashboard.putNumber("Speed", k_autoSpeed);
-  double m_autoSpeed = SmartDashboard.getNumber("Speed", 0.3);
-  if((m_autoSpeed != k_autoSpeed)) {k_autoSpeed = m_autoSpeed; }
-
-  SmartDashboard.putNumber("Rotat Go", k_roto);
-  double m_roto = SmartDashboard.getNumber("Rotat Go", 0.3);
-  if((m_roto != k_roto)) {k_roto = m_roto; }
-
-  SmartDashboard.putNumber("Moter Go", k_moto);
-  double m_moto = SmartDashboard.getNumber("Moter Go", 0.3);
-  if((m_moto != k_moto)) {k_moto = m_moto; }
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
   m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
