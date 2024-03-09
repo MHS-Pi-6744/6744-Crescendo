@@ -47,7 +47,6 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_targetState;
 
 
-  private double m_feedforward;
 
   
 
@@ -183,17 +182,15 @@ public class ArmSubsystem extends SubsystemBase {
       m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
     }
      
-    m_feedforward =
-        ArmConstants.kArmFeedforward.calculate(
-            m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
+
             
 
     m_Leftcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, m_feedforward);
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   
   
     m_Rightcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, m_feedforward);
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
   /**
@@ -216,7 +213,7 @@ public class ArmSubsystem extends SubsystemBase {
             */
 
     // set the power of the motor
-    m_leftmotor.set(_power + (m_feedforward/12));
+    m_leftmotor.set(_power);
     
    
   }
@@ -233,7 +230,7 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
 
-    SmartDashboard.putNumber("Arm Feed Forward Value", m_feedforward);
+    
 
     
 
