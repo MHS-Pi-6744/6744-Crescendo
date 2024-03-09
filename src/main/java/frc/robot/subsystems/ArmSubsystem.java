@@ -108,6 +108,10 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
+    m_setpoint = 0;
+    m_leftencoder.setPosition(0);
+    m_rightencoder.setPosition(0);
+
     /* DOES NOT WORK 
 
     m_Leftcontroller.setOutputRange(0, 0.5);

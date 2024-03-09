@@ -48,7 +48,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = 0;
+    public static final double kSoftLimitReverse = -20;
     public static final double kSoftLimitForward = 100;
 
     //public static final double kArmGearRatio = 8.48;
