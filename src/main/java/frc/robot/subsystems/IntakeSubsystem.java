@@ -3,10 +3,12 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-
+import com.revrobotics.SparkRelativeEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -19,6 +21,13 @@ public class IntakeSubsystem extends SubsystemBase {
         
     private final CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.Intake_CANID, MotorType.kBrushless);
     
+    private final RelativeEncoder m_intakeEncoder;
+
+public IntakeSubsystem() { 
+
+    m_intakeEncoder = m_intakeMotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+
+}
 /*public IntakeSubsystem() {
 
     m_intakeMotor.restoreFactoryDefaults();
@@ -55,6 +64,14 @@ public class IntakeSubsystem extends SubsystemBase {
  @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    m_intakeMotor.getOutputCurrent();
+    ;
+
+    SmartDashboard.putNumber("Intake Motor Output", m_intakeMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Intake Motor Current", m_intakeMotor.getOutputCurrent());
+
+    SmartDashboard.putNumber("Intake Motor P", m_intakeEncoder.getPosition());
+    SmartDashboard.putNumber("Intake Motor V", m_intakeEncoder.getVelocity());
   }
 }
  
