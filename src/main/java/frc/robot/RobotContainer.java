@@ -99,11 +99,7 @@ private void configureButtonBindings() {
 
     
     // Pickup a note with controller 2 right trigger
-    m_driverController2.leftBumper().whileTrue(m_intake.pickupCommand());
-
-    m_driverController2.leftBumper().whileTrue(m_shoot.shooterCommand());
-    // Release note with controller2 left trigger
-    m_driverController2.leftTrigger().whileTrue(m_shoot.shooterCommand());
+    m_driverController2.leftBumper().whileTrue(m_intake.pickupCommand().withTimeout(0.5));
 
     //Shoot note with controller 2 bumpers both shoot and pickup
     m_driverController2.rightBumper().whileTrue(new ParallelRaceGroup(m_shoot.shooterCommand(), m_intake.pickupCommand()));
