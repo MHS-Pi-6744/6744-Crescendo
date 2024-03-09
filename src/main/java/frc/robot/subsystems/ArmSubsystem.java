@@ -223,12 +223,17 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoder Position", m_leftencoder.getPosition());
-    SmartDashboard.putNumber("Right Encoder Position", m_rightencoder.getPosition());
-    SmartDashboard.putNumber("SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Left Arm Position", m_leftencoder.getPosition());
+    SmartDashboard.putNumber("Right Arm Position", m_rightencoder.getPosition());
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    
+    SmartDashboard.putNumber("Left Arm Velocity", m_leftencoder.getVelocity());
+    SmartDashboard.putNumber("Right Arm Velocity", m_rightencoder.getVelocity());
 
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+
+    SmartDashboard.putNumber("Arm Feed Forward Value", m_feedforward);
 
     
 

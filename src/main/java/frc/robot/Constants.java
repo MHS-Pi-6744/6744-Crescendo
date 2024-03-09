@@ -63,13 +63,13 @@ public static final class ArmConstants {     // Is the final needed here?????
         1.342; // radians to add to converted arm position to get real-world arm position (starts at
     // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
     public static final ArmFeedforward kArmFeedforward =
-        new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+        new ArmFeedforward(0.0, 0.40, 0.06, 0.0);
     
     // Set PID gains
     public static final PIDGains kArmPositionGains = new PIDGains(0.0009, 0.0, 0);
 
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(45, 0.2);
+        new TrapezoidProfile.Constraints(0.4, 0.2);
 
     public static final double kHomePosition = 0;
     public static final double kScoringPosition = 90;
