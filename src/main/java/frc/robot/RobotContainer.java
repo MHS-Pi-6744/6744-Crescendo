@@ -78,8 +78,6 @@ public RobotContainer(){
   m_chooser.addOption("Drive Rotations", m_driveRotation);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
-  // Put the chooser on the dashboard
-  Shuffleboard.getTab("Autonomous").add(m_chooser);
 
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
