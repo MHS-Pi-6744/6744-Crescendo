@@ -46,7 +46,10 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
 
-  //private double m_feedforward;
+
+  private double m_feedforward;
+
+  
 
    // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
 
@@ -99,10 +102,15 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
     m_rightencoder.setPosition(0);
 
+    
+
     m_Leftcontroller = m_leftmotor.getPIDController();
     m_Rightcontroller = m_rightmotor.getPIDController();
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+
+    m_Leftcontroller.setOutputRange(0, 0.5);
+    m_Rightcontroller.setOutputRange(0, 0.5);
 
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
@@ -174,18 +182,18 @@ public class ArmSubsystem extends SubsystemBase {
     } else {
       m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
     }
-    /* Turn off feed forward 
+     
     m_feedforward =
         ArmConstants.kArmFeedforward.calculate(
             m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
-            */
+            
 
     m_Leftcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, m_feedforward);
   
   
     m_Rightcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, m_feedforward);
   }
 
   /**
@@ -208,8 +216,8 @@ public class ArmSubsystem extends SubsystemBase {
             */
 
     // set the power of the motor
-    m_leftmotor.set(_power);
-    m_rightmotor.set(_power);
+    m_leftmotor.set(_power + (m_feedforward/12));
+    
    
   }
 
