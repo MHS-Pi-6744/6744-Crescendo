@@ -36,7 +36,8 @@ public class Robot extends TimedRobot {
     DataLogManager.start();
     URCL.start(); //Required for AdvantageScope. requires vendor dep https://raw.githubusercontent.com/Mechanical-Advantage/URCL/maven/URCL.json -RM
 
-
+    enableLiveWindowInTest(true);
+    
     // Record DS control and joystick data.
     // Change to `false` to not record joystick data.
     DriverStation.startDataLog(DataLogManager.getLog(), true);

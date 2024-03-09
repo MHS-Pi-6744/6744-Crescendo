@@ -33,7 +33,7 @@ public class Drivetrain extends SubsystemBase {
   private final RelativeEncoder m_rightEncoder;
 
   // Create Gyroscope
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  //private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   
   /** Creates a new subsystem. */
   public Drivetrain() {
@@ -132,8 +132,8 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right Drive P", m_rightEncoder.getPosition());
     SmartDashboard.putNumber("Left Drive V",m_leftEncoder.getVelocity());
     SmartDashboard.putNumber("Right Drive V", m_rightEncoder.getVelocity());
-    SmartDashboard.putNumber("Gyro Angle", m_gyro.getAngle());
-    SmartDashboard.putNumber("Gyro Rate", m_gyro.getRate());
+    //SmartDashboard.putNumber("Gyro Angle", m_gyro.getAngle());
+    //SmartDashboard.putNumber("Gyro Rate", m_gyro.getRate());
 
     m_drive.feed(); // Used to stop safety error messages?
   }
