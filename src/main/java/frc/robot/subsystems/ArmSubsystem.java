@@ -108,7 +108,9 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
-    m_setpoint = 0;
+    m_setpoint = m_leftencoder.getPosition();
+
+
     m_leftencoder.setPosition(0);
     m_rightencoder.setPosition(0);
 
@@ -122,7 +124,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
 
-    m_setpoint = ArmConstants.kHomePosition;
+   
 
     m_timer = new Timer();
     m_timer.start();
@@ -223,7 +225,6 @@ public class ArmSubsystem extends SubsystemBase {
     // set the power of the motor
     m_leftmotor.set(_power);
     
-   
   }
 
   @Override
