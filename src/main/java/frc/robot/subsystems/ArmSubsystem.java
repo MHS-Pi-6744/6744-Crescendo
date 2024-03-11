@@ -46,7 +46,9 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
 
-  //private double m_feedforward;
+
+
+  
 
    // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
 
@@ -99,10 +101,23 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
     m_rightencoder.setPosition(0);
 
+    
+
     m_Leftcontroller = m_leftmotor.getPIDController();
     m_Rightcontroller = m_rightmotor.getPIDController();
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+
+    m_setpoint = 0;
+    m_leftencoder.setPosition(0);
+    m_rightencoder.setPosition(0);
+
+    /* DOES NOT WORK 
+
+    m_Leftcontroller.setOutputRange(0, 0.5);
+    m_Rightcontroller.setOutputRange(0, 0.5);
+
+    */
 
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
@@ -174,11 +189,9 @@ public class ArmSubsystem extends SubsystemBase {
     } else {
       m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
     }
-    /* Turn off feed forward 
-    m_feedforward =
-        ArmConstants.kArmFeedforward.calculate(
-            m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
-            */
+     
+
+            
 
     m_Leftcontroller.setReference(
         m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
@@ -209,18 +222,25 @@ public class ArmSubsystem extends SubsystemBase {
 
     // set the power of the motor
     m_leftmotor.set(_power);
-    m_rightmotor.set(_power);
+    
    
   }
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoder Position", m_leftencoder.getPosition());
-    SmartDashboard.putNumber("Right Encoder Position", m_rightencoder.getPosition());
-    SmartDashboard.putNumber("SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Left Arm Position", m_leftencoder.getPosition());
+    SmartDashboard.putNumber("Right Arm Position", m_rightencoder.getPosition());
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    
+    SmartDashboard.putNumber("Left Arm Velocity", m_leftencoder.getVelocity());
+    SmartDashboard.putNumber("Right Arm Velocity", m_rightencoder.getVelocity());
 
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+
+    
+
+    
 
     
 

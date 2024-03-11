@@ -48,7 +48,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = 0;
+    public static final double kSoftLimitReverse = -20;
     public static final double kSoftLimitForward = 100;
 
     //public static final double kArmGearRatio = 8.48;
@@ -57,14 +57,16 @@ public static final class ArmConstants {     // Is the final needed here?????
     //        * Math.PI; // multiply SM (rotation in from SmartMax? Units?) value by this number and get arm position in radians
     public static final double kVelocityFactor = 2.0625 / 60.0;
     public static final double kArmFreeSpeed = 5676.0 * kVelocityFactor;
+
+    //Feedforward constants
     public static final double kArmZeroCosineOffset =
         1.342; // radians to add to converted arm position to get real-world arm position (starts at
-    // ~76.9deg angle)
+    // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
     public static final ArmFeedforward kArmFeedforward =
         new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(0.001, 0.0, 0);
+    public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(0.8, 0.01);
+        new TrapezoidProfile.Constraints(0.4, 0.2);
 
     public static final double kHomePosition = 0;
     public static final double kScoringPosition = 90;
@@ -75,9 +77,15 @@ public static final class ArmConstants {     // Is the final needed here?????
 //          Should this class name be something like I-SConstants???????
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
-    public static final double k_intakeSpeed = 1;
+    public static final double k_intakeSpeed = 0.7;
     public static final int Shooter_CANID = 5;
+    public static final double k_shooterSpeed = 0.5;
+    public static final double k_slowShooter = 0.1;
   }
+  /*public static class ClimberConstants {
+    public static final int Climber_CANID = 10;
+    public static final double k_climbSpeed = 1.0;
+  }*/
   
 
 
@@ -85,8 +93,8 @@ public static final class ArmConstants {     // Is the final needed here?????
   
  // Operator input constants - RM
   public static class OIConstants {
-    public static final int kDriverControllerPort = 1;
-    public static final int kDriverController2Port = 0;
+    public static final int kDriverControllerPort = 0;
+    public static final int kDriverController2Port = 1;
   }
 
   public static class AutoConstants {
