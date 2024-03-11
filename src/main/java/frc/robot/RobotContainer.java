@@ -39,12 +39,14 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
-  
+  double m_autoSpeed = m_drive.k_autoSpeed.getDouble(0.3);
+  double m_roto = m_drive.k_roto.getDouble(2.5);
+  double m_moto = m_drive.k_moto.getDouble(0.5);
 
-  private final Command m_driveDistance = new DriveDistance(m_drive.k_moto, m_drive.k_autoSpeed, m_drive);
+  private final Command m_driveDistance = new DriveDistance(m_moto, m_autoSpeed, m_drive);
   // negative speed moves backwards
 
-  private final Command m_driveRotation = new DriveRotation(m_drive.k_roto, m_drive.k_autoSpeed, m_drive);
+  private final Command m_driveRotation = new DriveRotation(m_roto, m_autoSpeed, m_drive);
   // Positive speed goes right 
   private final Command m_autoTest = new TestAuto(m_drive);
 

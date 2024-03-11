@@ -8,14 +8,14 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DrivetrainConstants;
 
 
@@ -27,12 +27,12 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
 
-  public double k_autoSpeed = 0.3;
-  public double k_roto = 2.5;
-  public double k_moto = 0.5;
+  final ShuffleboardTab drvTab = Shuffleboard.getTab("Drive");
+
+  public GenericEntry k_autoSpeed = drvTab.add("Speed", 0.3).getEntry();
+  public GenericEntry k_roto = drvTab.add("Rotation", 2.5).getEntry();
+  public GenericEntry k_moto = drvTab.add("Driving", 0.5).getEntry();
   
-
-
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);
   
@@ -139,15 +139,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right Drive P", m_rightEncoder.getPosition());
     SmartDashboard.putNumber("Left Drive V",m_leftEncoder.getVelocity());
     SmartDashboard.putNumber("Right Drive V", m_rightEncoder.getVelocity());
-    SmartDashboard.putNumber("Moter Go", k_moto);
-    SmartDashboard.putNumber("Rotat Go", k_roto);
-    SmartDashboard.putNumber("Speed", k_autoSpeed);
-    double m_roto = SmartDashboard.getNumber("Rotat Go", 2.5);
-    if((m_roto != k_roto)) {k_roto = m_roto; }
-    double m_moto = SmartDashboard.getNumber("Moter Go", 0.5);
-    if((m_moto != k_moto)) {k_moto = m_moto; }
-    double m_autoSpeed = SmartDashboard.getNumber("Speed", 0.3);
-    if((m_autoSpeed != k_autoSpeed)) {k_autoSpeed = m_autoSpeed; }
+
     //SmartDashboard.putNumber("Gyro Angle", m_gyro.getAngle());
     //SmartDashboard.putNumber("Gyro Rate", m_gyro.getRate());
 
