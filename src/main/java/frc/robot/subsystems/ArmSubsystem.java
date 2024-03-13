@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import javax.swing.plaf.TreeUI;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -28,12 +31,14 @@ import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
+  
   // Declare variables
   private CANSparkMax m_leftmotor;
   private CANSparkMax m_rightmotor;
   private RelativeEncoder m_leftencoder;
   private RelativeEncoder m_rightencoder;
-  private SparkPIDController m_controller;
+  private SparkPIDController m_Leftcontroller;
+  private SparkPIDController m_Rightcontroller;
   private double m_setpoint;
   private TrapezoidProfile m_profile;
   private Timer m_timer;
@@ -41,7 +46,11 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
 
-  //private double m_feedforward;
+
+
+  
+
+   // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
 
     
  
@@ -53,16 +62,15 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
     m_rightmotor = new CANSparkMax(ArmConstants.kRightArmCanId, MotorType.kBrushless);
 
-
     m_leftmotor.restoreFactoryDefaults();  
     m_rightmotor.restoreFactoryDefaults();
     
     // Set forward direction
-    m_leftmotor.setInverted(false);
+    m_leftmotor.setInverted(true);
     m_rightmotor.setInverted(false);
  
     //Set the right motor to follow the left motor
-    m_rightmotor.follow(m_leftmotor);
+    //m_rightmotor.follow(m_leftmotor);
 
     m_leftmotor.setSmartCurrentLimit(ArmConstants.kArmCurrentLimit);
     m_rightmotor.setSmartCurrentLimit(ArmConstants.kArmCurrentLimit);
@@ -90,13 +98,30 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
     m_rightencoder.setPosition(0);
 
-    m_controller = m_leftmotor.getPIDController();
-    PIDGains.setSparkMaxGains(m_controller, ArmConstants.kArmPositionGains);
+    
+
+    m_Leftcontroller = m_leftmotor.getPIDController();
+    m_Rightcontroller = m_rightmotor.getPIDController();
+    PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
+    PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+
+    m_setpoint = m_leftencoder.getPosition();
+
+
+    m_leftencoder.setPosition(0);
+    m_rightencoder.setPosition(0);
+
+    /* DOES NOT WORK 
+
+    m_Leftcontroller.setOutputRange(0, 0.5);
+    m_Rightcontroller.setOutputRange(0, 0.5);
+
+    */
 
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
 
-    m_setpoint = ArmConstants.kHomePosition;
+   
 
     m_timer = new Timer();
     m_timer.start();
@@ -163,13 +188,15 @@ public class ArmSubsystem extends SubsystemBase {
     } else {
       m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
     }
-    /* Turn off feed forward 
-    m_feedforward =
-        ArmConstants.kArmFeedforward.calculate(
-            m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
-            */
+     
 
-    m_controller.setReference(
+            
+
+    m_Leftcontroller.setReference(
+        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
+  
+  
+    m_Rightcontroller.setReference(
         m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
@@ -194,19 +221,35 @@ public class ArmSubsystem extends SubsystemBase {
 
     // set the power of the motor
     m_leftmotor.set(_power);
-   
   }
+
+  public void setArmCoastMode(){
+    m_leftmotor.setIdleMode(IdleMode.kCoast);
+    m_rightmotor.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setArmBrakeMode(){
+    m_leftmotor.setIdleMode(IdleMode.kBrake);
+    m_rightmotor.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void setArmStart(){
+    m_leftencoder.setPosition(90);
+    m_rightencoder.setPosition(90);
+  }
+
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Arm Encoder Position", m_leftencoder.getPosition());
-    SmartDashboard.putNumber("Right Arm Encoder Position", m_rightencoder.getPosition());
-    SmartDashboard.putNumber("Left Arm V",m_leftencoder.getVelocity());
-    SmartDashboard.putNumber("Right Arm V", m_rightencoder.getVelocity());
+    SmartDashboard.putNumber("Left Arm Position", m_leftencoder.getPosition());
+    SmartDashboard.putNumber("Right Arm Position", m_rightencoder.getPosition());
     SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    
+    SmartDashboard.putNumber("Left Arm Velocity", m_leftencoder.getVelocity());
+    SmartDashboard.putNumber("Right Arm Velocity", m_rightencoder.getVelocity());
 
-    SmartDashboard.getNumber(" Get Arm Intake Position", Constants.ArmConstants.kScoringPosition);
-    SmartDashboard.getNumber(" Get Arm Home Position", Constants.ArmConstants.kHomePosition);
-
+    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
+    SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+   
   }
 }

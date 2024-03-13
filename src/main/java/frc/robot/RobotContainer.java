@@ -4,18 +4,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
+import frc.robot.commands.DriveRotation;
+//import frc.robot.commands.TestAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -40,14 +40,19 @@ public class RobotContainer {
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
   
-  private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
+
+  private final Command m_driveDistance = new DriveDistance(m_drive.k_moto, m_drive.k_autoSpeed, m_drive);
   // negative speed moves backwards
 
+  private final Command m_driveRotation = new DriveRotation(m_drive.k_roto, m_drive.k_autoSpeed, m_drive);
+  // Positive speed goes right 
+  //private final Command m_autoTest = new TestAuto(m_drive);
+
+  // The autonomous routines
+  //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -63,12 +68,12 @@ public RobotContainer(){
 
   // Put the chooser on the dashboard
   Shuffleboard.getTab("Autonomous").add(m_chooser);
-  
+
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
+  m_chooser.addOption("Drive Rotations", m_driveRotation);
+  //m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
-
-
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
@@ -99,14 +104,13 @@ private void configureButtonBindings() {
 
     
     // Pickup a note with controller 2 right trigger
-    m_driverController2.rightTrigger().whileTrue(m_intake.pickupCommand());
-
-    // Release note with controller2 left trigger
-    m_driverController2.leftTrigger().whileTrue(m_intake.releaseCommand());
+    m_driverController.leftBumper().whileTrue(m_intake.pickupCommand().withTimeout(0.5).alongWith(m_shoot.slowShooterCommand().withTimeout(0.5)));
 
     //Shoot note with controller 2 bumpers both shoot and pickup
-    m_driverController2.rightBumper().whileTrue(new ParallelRaceGroup(m_intake.pickupCommand(), m_shoot.shooterCommand()));
-    m_driverController2.leftBumper().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
+    m_driverController.rightBumper().whileTrue(new ParallelRaceGroup(m_shoot.shooterCommand(), m_intake.pickupCommand()));
+
+    //Drop note if stuck
+    m_driverController.b().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
     
     // Move arm to home position with controller 2 Y button
     m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kHomePosition)));
@@ -114,7 +118,7 @@ private void configureButtonBindings() {
     // Move arm to scoring position with controller 2 A button
     m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
 
-
+    
 }
 
 
@@ -126,6 +130,14 @@ private void configureButtonBindings() {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected();
-  
   }
+
+  public void setCoastMode(){
+    m_arm.setArmCoastMode();
+  }
+  
+  public void setBrakeMode(){
+    m_arm.setArmBrakeMode();
+  }
+
 }
