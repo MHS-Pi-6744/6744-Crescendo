@@ -39,16 +39,16 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
-  double m_autoSpeed = m_drive.k_autoSpeed.getDouble(0.3);
-  double m_roto = m_drive.k_roto.getDouble(2.5);
-  double m_moto = m_drive.k_moto.getDouble(0.5);
+  double m_autoSpeed = m_drive.k_autoSpeed.getDouble(0);
+  double m_roto = m_drive.k_roto.getDouble(0);
+  double m_moto = m_drive.k_moto.getDouble(0);
 
   private final Command m_driveDistance = new DriveDistance(m_moto, m_autoSpeed, m_drive);
   // negative speed moves backwards
 
   private final Command m_driveRotation = new DriveRotation(m_roto, m_autoSpeed, m_drive);
   // Positive speed goes right 
-  private final Command m_autoTest = new RedAmpAuto(m_drive, m_shoot);
+  private final Command m_redAmpCommand = new RedAmpAuto(m_drive, m_shoot);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -74,7 +74,7 @@ public RobotContainer(){
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Drive Rotations", m_driveRotation);
-  m_chooser.addOption("Red Amp Auto", m_autoTest);
+  m_chooser.addOption("Red Amp Auto", m_redAmpCommand);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????

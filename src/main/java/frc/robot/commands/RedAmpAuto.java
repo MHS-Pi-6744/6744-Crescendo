@@ -14,8 +14,9 @@ public class RedAmpAuto extends SequentialCommandGroup{
             //drive to the amp
             new DriveDistance(0.75, -0.3, drive),
             // Lift arm
+            // new armCommand(),
             // Drop Note in
-            //new shooterCommand(),
+            // new shooterCommand(),
             // Move away
             new DriveDistance(0.5, 0.3, drive),
             // Rotate away
