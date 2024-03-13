@@ -7,10 +7,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import com.revrobotics.SparkRelativeEncoder;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkRelativeEncoder;
 
 
 /**The following is an example of using the INLINE method of calling commands. A seperate command file is not required.
@@ -28,16 +31,12 @@ public IntakeSubsystem() {
     m_intakeEncoder = m_intakeMotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
 
 }
-/*public IntakeSubsystem() {
 
-    m_intakeMotor.restoreFactoryDefaults();
-
+    /* m_intakeMotor.restoreFactoryDefaults();
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
-
-    //m_intakeMotor.setSmartCurrentLimit(30, 30);
-
-    m_intakeMotor.burnFlash();
-}*/
+    m_intakeMotor.setSmartCurrentLimit(30, 30);
+    m_intakeMotor.burnFlash(); */
+}
 
 
 
@@ -64,6 +63,7 @@ public IntakeSubsystem() {
  @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
     m_intakeMotor.getOutputCurrent();
     ;
 
@@ -72,6 +72,6 @@ public IntakeSubsystem() {
 
     SmartDashboard.putNumber("Intake Motor P", m_intakeEncoder.getPosition());
     SmartDashboard.putNumber("Intake Motor V", m_intakeEncoder.getVelocity());
+
   }
 }
- 
