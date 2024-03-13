@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveRotation;
-import frc.robot.commands.TestAuto;
+import frc.robot.commands.RedAmpAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -48,7 +48,7 @@ public class RobotContainer {
 
   private final Command m_driveRotation = new DriveRotation(m_roto, m_autoSpeed, m_drive);
   // Positive speed goes right 
-  private final Command m_autoTest = new TestAuto(m_drive);
+  private final Command m_autoTest = new RedAmpAuto(m_drive, m_shoot);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -74,7 +74,7 @@ public RobotContainer(){
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Drive Rotations", m_driveRotation);
-  m_chooser.addOption("Auto Test", m_autoTest);
+  m_chooser.addOption("Red Amp Auto", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
