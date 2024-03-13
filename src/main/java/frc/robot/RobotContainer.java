@@ -120,7 +120,7 @@ private void configureButtonBindings() {
     // Move arm to scoring position with controller 2 A button
     m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
 
-
+    
 }
 
 
@@ -132,6 +132,14 @@ private void configureButtonBindings() {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected();
-  
   }
+
+  public void setCoastMode(){
+    m_arm.setArmCoastMode();
+  }
+  
+  public void setBrakeMode(){
+    m_arm.setArmBrakeMode();
+  }
+
 }
