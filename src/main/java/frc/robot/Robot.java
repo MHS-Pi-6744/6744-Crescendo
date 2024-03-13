@@ -64,17 +64,17 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     
+    /* 
     if (RobotController.getUserButton()){
       m_RobotContainer.setCoastMode();
     }
- 
-    //m_RobotContainer.setCoastMode();
+  */
+    m_RobotContainer.setCoastMode();
   }
 
   @Override
   public void disabledPeriodic() {
 
-    if(m_RobotContainer.m_driverController.start(m_RobotContainer.setCoastMode));
   }
 
 
