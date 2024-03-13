@@ -8,6 +8,7 @@ import org.littletonrobotics.urcl.URCL;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -61,17 +62,28 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    
+    /* 
+    if (RobotController.getUserButton()){
+      m_RobotContainer.setCoastMode();
+    }
+  */
+    m_RobotContainer.setCoastMode();
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+  }
 
 
   // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
   @Override
   public void autonomousInit() {
     
-  m_autonomousCommand = m_RobotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_RobotContainer.getAutonomousCommand();
+    m_RobotContainer.setBrakeMode();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -92,6 +104,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_RobotContainer.setBrakeMode();
   }
 
   /** This function is called periodically during operator control. */

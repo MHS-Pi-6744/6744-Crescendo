@@ -28,7 +28,7 @@ public ShooterSubsystem() {
 
     m_shooterMotor.setIdleMode(IdleMode.kBrake);
 
-    //m_shooterMotor.setSmartCurrentLimit(30, 30);
+    m_shooterMotor.setSmartCurrentLimit(30, 30);
 
     m_shooterMotor.burnFlash();
 }*/
