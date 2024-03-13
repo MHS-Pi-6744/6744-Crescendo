@@ -46,7 +46,8 @@ public class ArmSubsystem extends SubsystemBase {
     
  
 
-  /** Creates and initializes a new ArmSubsystem. */
+  /** Creates and initializes a new ArmSubsystem. This is run on power up. 
+   *        It's not run when mode is switched from disabled to enabled */
   public ArmSubsystem() {
   
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
@@ -79,8 +80,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightmotor.setSoftLimit(SoftLimitDirection.kForward, (float) ArmConstants.kSoftLimitForward);
     m_rightmotor.setSoftLimit(SoftLimitDirection.kReverse, (float) ArmConstants.kSoftLimitReverse);
 
-    // set up the motor encoders including conversion factors to convert to radians and radians per
-    // second for position and velocity ------  Seems like degrees would be easier units to work with?
+    // set up the motor encoders - sets position to 0 (the arm resting on the brace at intake position)
     m_leftencoder = m_leftmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_leftencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_leftencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
