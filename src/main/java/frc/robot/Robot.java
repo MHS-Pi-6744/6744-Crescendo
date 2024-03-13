@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import org.littletonrobotics.urcl.URCL;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -34,7 +33,7 @@ public class Robot extends TimedRobot {
 
     // Start recording to data log
     DataLogManager.start();
-    URCL.start(); //Required for AdvantageScope. requires vendor dep https://raw.githubusercontent.com/Mechanical-Advantage/URCL/maven/URCL.json -RM
+    //Required for AdvantageScope. requires vendor dep https://raw.githubusercontent.com/Mechanical-Advantage/URCL/maven/URCL.json -RM
 
     enableLiveWindowInTest(true);
     
