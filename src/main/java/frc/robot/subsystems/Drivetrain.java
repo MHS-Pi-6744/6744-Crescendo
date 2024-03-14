@@ -116,7 +116,9 @@ public class Drivetrain extends SubsystemBase {
   public double getAbsoluteAverageEncoderDistance() {
     return ((Math.abs(m_rightEncoder.getPosition()) + Math.abs(m_leftEncoder.getPosition()) / 2.0));
   }
-
+  public double gyroGetAngle() {
+    return (m_gyro.getAngle());
+  }
   // Teleop default drive command
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
     // A split-stick arcade command, with forward/backward controlled by the left
