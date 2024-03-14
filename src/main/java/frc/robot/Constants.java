@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.SPI;
 import frc.lib.PIDGains;
 
 /**
@@ -24,6 +25,8 @@ public final class Constants {
     public static final int kLeftMotor2CANID = 2;
     public static final int kRightMotorCANID = 3;
     public static final int kRightMotor2CANID = 4;
+
+    public static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public static final boolean kLeftEncoderReversed = false;
     public static final boolean kRightEncoderrevesed = false;
