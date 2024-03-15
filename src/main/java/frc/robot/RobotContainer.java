@@ -47,7 +47,7 @@ public class RobotContainer {
   // negative speed moves backwards
 
   private final Command m_driveRotation = new DriveRotation(m_roto, m_autoSpeed, m_drive);
-  // Positive speed goes right
+  // Positive angle goes right
 
   private final Command m_redAmpCommand = new RedAmpAuto(m_drive, m_shoot);
 

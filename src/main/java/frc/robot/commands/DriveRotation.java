@@ -9,7 +9,7 @@ public class DriveRotation extends Command {
     private final double m_speed;
 
     public DriveRotation(double angle, double speed, Drivetrain drive) {
-        m_rotation = (drive.gyroGetAngle() + angle);
+        m_rotation = angle;
         m_speed = speed;
         m_drive = drive;
         addRequirements(m_drive);
@@ -19,11 +19,17 @@ public class DriveRotation extends Command {
     public void initialize() {
       m_drive.resetEncoders();
       m_drive.arcadeDrive(0, 0);
+      m_drive.zeroGyro();
     }
   
     @Override
     public void execute() {
-      m_drive.arcadeDrive(0, m_speed);
+      if(m_rotation >= 0){
+        m_drive.arcadeDrive(0, m_speed); 
+      }
+      else if(m_rotation <= 0){
+        m_drive.arcadeDrive(0, -m_speed);
+      }
     }
   
     @Override

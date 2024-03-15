@@ -119,6 +119,9 @@ public class Drivetrain extends SubsystemBase {
   public double gyroGetAngle() {
     return (m_gyro.getAngle());
   }
+  public void zeroGyro(){
+    m_gyro.reset();
+  }
   // Teleop default drive command
   public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
     // A split-stick arcade command, with forward/backward controlled by the left
