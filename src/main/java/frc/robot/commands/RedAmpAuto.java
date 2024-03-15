@@ -10,7 +10,7 @@ public class RedAmpAuto extends SequentialCommandGroup{
             // Drive far enough to go to amp
             new DriveDistance(2.8, 0.3, drive),
             //Rotate to Amp
-            new DriveRotation(0.5, -0.3, drive),
+            new DriveRotation(-90, 0.3, drive),
             //drive to the amp
             new DriveDistance(0.75, -0.3, drive),
             // Lift arm
@@ -20,7 +20,7 @@ public class RedAmpAuto extends SequentialCommandGroup{
             // Move away
             new DriveDistance(0.5, 0.3, drive),
             // Rotate away
-            new DriveRotation(0.5, 0.3, drive),
+            new DriveRotation(90, 0.3, drive),
             // Drive away 
             new DriveDistance(1.5, 0.3, drive)
         );
