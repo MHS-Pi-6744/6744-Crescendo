@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveRotation;
@@ -25,6 +29,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 
 
+
+
+
+
+
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,11 +44,20 @@ import frc.robot.subsystems.ShooterSubsystem;
  * 
  */
 public class RobotContainer {
+
+
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drive = new Drivetrain();
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
+
+
+
+
+
+   
+
 
   
 
@@ -46,7 +66,8 @@ public class RobotContainer {
 
   private final Command m_driveRotation = new DriveRotation(m_drive.k_roto, m_drive.k_autoSpeed, m_drive);
   // Positive speed goes right 
-  private final Command m_autoTest = new TestAuto(m_drive);
+
+  
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -72,8 +93,16 @@ public RobotContainer(){
   // Add commands to the autonomous command chooser
   m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
   m_chooser.addOption("Drive Rotations", m_driveRotation);
-  m_chooser.addOption("Auto Test", m_autoTest);
+  //m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
+
+
+
+
+  //m_chooser.addOption("Auto Test", m_driveDistance.withTimeout(1).andThen(m_driveRotation).withTimeout(3).andThen(m_shoot.shooterCommand()
+  //.withTimeout(2)));
+
+
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
@@ -102,6 +131,7 @@ private void configureButtonBindings() {
       m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
 
+
     
     // Pickup a note with controller 2 right trigger
     m_driverController.leftBumper().whileTrue(m_intake.pickupCommand().withTimeout(0.5).alongWith(m_shoot.slowShooterCommand().withTimeout(0.5)));
@@ -109,6 +139,7 @@ private void configureButtonBindings() {
     //Shoot note with controller 2 bumpers both shoot and pickup
     m_driverController.rightBumper().whileTrue(new ParallelRaceGroup(m_shoot.shooterCommand(), m_intake.pickupCommand()));
 
+   
     //Drop note if stuck
     m_driverController.b().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
     
@@ -118,7 +149,17 @@ private void configureButtonBindings() {
     // Move arm to scoring position with controller 2 A button
     m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
 
+    m_driverController2.b().whileTrue(new InstantCommand(() -> m_arm.ArmMoveBack())
+    .alongWith(new InstantCommand(() -> m_arm.LimitSwitchTrue())));
 
+    m_driverController2.x().whileTrue(new InstantCommand(() -> m_arm.ArmMoveForward()));
+
+
+    
+   
+  
+
+    
 }
 
 
@@ -129,7 +170,19 @@ private void configureButtonBindings() {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_chooser.getSelected();
+
   
+
+
+    
+    return m_chooser.getSelected();
   }
-}
+
+
+  }
+
+
+
+    
+
+
