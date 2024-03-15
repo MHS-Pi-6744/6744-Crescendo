@@ -4,34 +4,25 @@
 
 package frc.robot.subsystems;
 
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import javax.swing.plaf.TreeUI;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkRelativeEncoder;
+import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.PIDGains;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
 
-
-/*  -----Need to set up second motor as a follower
- * 
- */
-
 public class ArmSubsystem extends SubsystemBase {
 
-  
   // Declare variables
   private CANSparkMax m_leftmotor;
   private CANSparkMax m_rightmotor;
@@ -40,23 +31,12 @@ public class ArmSubsystem extends SubsystemBase {
   private SparkPIDController m_Leftcontroller;
   private SparkPIDController m_Rightcontroller;
   private double m_setpoint;
-  private TrapezoidProfile m_profile;
   private Timer m_timer;
-  private TrapezoidProfile.State m_startState;
-  private TrapezoidProfile.State m_endState;
-  private TrapezoidProfile.State m_targetState;
-
-
+  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM, maxVel, minVel, maxAcc, allowedErr;
 
   
-
-   // Create 2 SPARK MAX controllers   ----  Moved out of constructor to be consistent with WIPLib examples and Drivetrain
-
-    
- 
-
-  /** Creates and initializes a new ArmSubsystem. This is run on power up. 
-   *        It's not run when mode is switched from disabled to enabled */
+  /* Creates and initializes a new ArmSubsystem. This is run on power up. 
+        It's not run when mode is switched from disabled to enabled */
   public ArmSubsystem() {
   
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
@@ -65,13 +45,10 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftmotor.restoreFactoryDefaults();  
     m_rightmotor.restoreFactoryDefaults();
     
-    // Set forward direction
+    // Set up the motors
     m_leftmotor.setInverted(true);
     m_rightmotor.setInverted(false);
  
-    //Set the right motor to follow the left motor
-    //m_rightmotor.follow(m_leftmotor);
-
     m_leftmotor.setSmartCurrentLimit(ArmConstants.kArmCurrentLimit);
     m_rightmotor.setSmartCurrentLimit(ArmConstants.kArmCurrentLimit);
 
@@ -98,130 +75,32 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
     m_rightencoder.setPosition(0);
 
-    
-
+    // set up the motor controllers
     m_Leftcontroller = m_leftmotor.getPIDController();
     m_Rightcontroller = m_rightmotor.getPIDController();
-    PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
-    PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+  
 
+    // Initialize setpoint to the left encoder position
     m_setpoint = m_leftencoder.getPosition();
 
-
-    m_leftencoder.setPosition(0);
-    m_rightencoder.setPosition(0);
-
-    /* DOES NOT WORK 
-
-    m_Leftcontroller.setOutputRange(0, 0.5);
-    m_Rightcontroller.setOutputRange(0, 0.5);
-
-    */
-
+    /* 
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
-
+    */
    
-
     m_timer = new Timer();
     m_timer.start();
 
-    updateMotionProfile();
-
   }
 
-  /**
-   * Sets the target position and updates the motion profile if the target position changed.
-   *
-   * @param _setpoint The new target position in wheel revolutions.
-   */
+  // Set the target position - setpoint should be in degrees
   
   public void setTargetPosition(double _setpoint) {
     if (_setpoint != m_setpoint) {
       m_setpoint = _setpoint;
-      updateMotionProfile();
     }
   }
 
-/* 
-  public Command CommandSetTargetPosition(){
-    return this.runOnce(() -> setTargetPosition(m_setpoint));
-  }
-
-  public void setIntakePosition(double m_setpointIntake) {
-    if (m_setpoint != m_setpointIntake) {
-        m_setpoint = m_setpointIntake;
-      updateMotionProfile();
-    }
-  }
-
-  public Command CommandSetShootPosition(){
-    return this.runOnce(() -> setIntakePosition(m_setpoint));
-  }
-
-*/
-
-
-
-  /**
-   * Update the motion profile variables based on the current setpoint and the pre-configured motion
-   * constraints.
-   */
-  private void updateMotionProfile() {
-    m_startState = new TrapezoidProfile.State(m_leftencoder.getPosition(), m_leftencoder.getVelocity());
-    m_endState = new TrapezoidProfile.State(m_setpoint, 0.0);
-    m_profile = new TrapezoidProfile(ArmConstants.kArmMotionConstraint);
-    m_timer.reset();
-  }
-
-  /**
-   * Drives the arm to a position using a trapezoidal motion profile. This function is usually
-   * wrapped in a {@code RunCommand} which runs it repeatedly while the command is active.
-   *
-   * <p>This function updates the motor position control loop using a setpoint from the trapezoidal
-   * motion profile. The target position is the last set position with {@code setTargetPosition}.
-   */
-  public void runAutomatic() {
-    double elapsedTime = m_timer.get();
-    if (m_profile.isFinished(elapsedTime)) {
-      m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
-    } else {
-      m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
-    }
-     
-
-            
-
-    m_Leftcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
-  
-  
-    m_Rightcontroller.setReference(
-        m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
-  }
-
-  /**
-   * Drives the arm using the provided power value (usually from a joystick). This also adds in the
-   * feedforward value which can help counteract gravity.
-   *
-   * @param _power The motor power to apply.
-   */
-  public void runManual(double _power) {
-    // reset and zero out a bunch of automatic mode stuff so exiting manual mode happens cleanly and
-    // passively
-    m_setpoint = m_leftencoder.getPosition();
-    updateMotionProfile();
-
-    // update the feedforward variable with the newly zero target velocity
-    /* Turn off feed forward 
-    m_feedforward =
-        ArmConstants.kArmFeedforward.calculate(
-            m_leftencoder.getPosition() + ArmConstants.kArmZeroCosineOffset, m_targetState.velocity);
-            */
-
-    // set the power of the motor
-    m_leftmotor.set(_power);
-  }
 
   public void setArmCoastMode(){
     m_leftmotor.setIdleMode(IdleMode.kCoast);
@@ -251,5 +130,46 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
    
+// display PID coefficients on SmartDashboard
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
+    SmartDashboard.putNumber("I Zone", kIz);
+    SmartDashboard.putNumber("Feed Forward", kFF);
+    SmartDashboard.putNumber("Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Min Output", kMinOutput);
+
+    // display Smart Motion coefficients
+    SmartDashboard.putNumber("Max Velocity", maxVel);
+    SmartDashboard.putNumber("Min Velocity", minVel);
+    SmartDashboard.putNumber("Max Acceleration", maxAcc);
+    SmartDashboard.putNumber("Allowed Closed Loop Error", allowedErr);
+    SmartDashboard.putNumber("Set Position", 0);
+    SmartDashboard.putNumber("Set Velocity", 0);
+
+    // button to toggle between velocity and smart motion modes
+    SmartDashboard.putBoolean("Mode", true);
+    
+    // Smart Motion display:
+    // display PID coefficients on SmartDashboard
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
+    SmartDashboard.putNumber("I Zone", kIz);
+    SmartDashboard.putNumber("Feed Forward", kFF);
+    SmartDashboard.putNumber("Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Min Output", kMinOutput);
+
+    // display Smart Motion coefficients
+    SmartDashboard.putNumber("Max Velocity", maxVel);
+    SmartDashboard.putNumber("Min Velocity", minVel);
+    SmartDashboard.putNumber("Max Acceleration", maxAcc);
+    SmartDashboard.putNumber("Allowed Closed Loop Error", allowedErr);
+    SmartDashboard.putNumber("Set Position", 0);
+    SmartDashboard.putNumber("Set Velocity", 0);
+
+    // button to toggle between velocity and smart motion modes
+    SmartDashboard.putBoolean("Mode", true);
+
   }
 }

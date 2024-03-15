@@ -37,8 +37,8 @@ public IntakeSubsystem() {
     /* m_intakeMotor.restoreFactoryDefaults();
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
     m_intakeMotor.setSmartCurrentLimit(30, 30);
-    m_intakeMotor.burnFlash(); */
-}
+    m_intakeMotor.burnFlash(); 
+}*/
 
 
 

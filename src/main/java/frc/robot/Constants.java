@@ -41,40 +41,42 @@ public final class Constants {
     ((double) (Math.PI*kWheelDiameter)/(60*kGearRatio));
   }
 
-public static final class ArmConstants {     // Is the final needed here?????
+public static class ArmConstants {     
     public static final int kLeftArmCanId = 7;
     public static final boolean kLeftArmInverted = false;
     public static final int kRightArmCanId = 8;
     public static final boolean kRightArmInverted = false;
+    
+    // controller settings for both arm motor controls
     public static final int kArmCurrentLimit = 40;
-
     public static final double kSoftLimitReverse = -20;
     public static final double kSoftLimitForward = 100;
-
-    //public static final double kArmGearRatio = 8.48;
+    public static final double kMaxOutput = 1; 
+    public static final double kMinOutput = -1;
+    public static final double maxRPM = 5700;   // ??????????? units
     public static final double kPositionFactor = 2.0625;
-    //        * 2.0
-    //        * Math.PI; // multiply SM (rotation in from SmartMax? Units?) value by this number and get arm position in radians
     public static final double kVelocityFactor = 2.0625 / 60.0;
-    public static final double kArmFreeSpeed = 5676.0 * kVelocityFactor;
+   
+    // public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
 
-    //Feedforward constants
-    public static final double kArmZeroCosineOffset =
-        1.342; // radians to add to converted arm position to get real-world arm position (starts at
-    // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
-    public static final ArmFeedforward kArmFeedforward =
-        new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
-    public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(0.4, 0.2);
+    // PID coefficients for initialization
+    public static final double kPinitial = 5e-5; 
+    public static final double kIinitial = 1e-6;
+    public static final double kDinitial = 0; 
+    public static final double kIzinitial = 0; 
+    public static final double kFFinitial = 0.000156; 
+    
 
+    // Smart Motion Coefficients for initialization
+    public static final double maxVelinitial = 30; // deg/sec
+    public static final double maxAccinitial = 60;  // deg/sec/sec
+
+    // Target arm positions
     public static final double kHomePosition = 0;
     public static final double kScoringPosition = 90;
     
   }
 
-// ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr
-//          Should this class name be something like I-SConstants???????
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
     public static final double k_intakeSpeed = 0.7;
