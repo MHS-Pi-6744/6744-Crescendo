@@ -7,20 +7,22 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkRelativeEncoder;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+
+
+
 
 
 
@@ -34,16 +36,21 @@ public class ArmSubsystem extends SubsystemBase {
   // Declare variables
   private CANSparkMax m_leftmotor;
   private CANSparkMax m_rightmotor;
-  private RelativeEncoder m_leftencoder;
+  public RelativeEncoder m_leftencoder;
   private RelativeEncoder m_rightencoder;
   private SparkPIDController m_Leftcontroller;
   private SparkPIDController m_Rightcontroller;
-  private double m_setpoint;
+  public double m_setpoint;
   private TrapezoidProfile m_profile;
   private Timer m_timer;
   private TrapezoidProfile.State m_startState;
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
+
+  public DigitalInput islimitSwitch = new DigitalInput(0);
+
+
+
 
 
 
@@ -59,6 +66,8 @@ public class ArmSubsystem extends SubsystemBase {
   
     m_leftmotor = new CANSparkMax(ArmConstants.kLeftArmCanId, MotorType.kBrushless);
     m_rightmotor = new CANSparkMax(ArmConstants.kRightArmCanId, MotorType.kBrushless);
+
+
 
     
 
@@ -109,6 +118,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     m_setpoint = 0;
 
+    m_setpoint = m_leftencoder.getPosition();
+
 
     /* DOES NOT WORK 
 
@@ -120,12 +131,19 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftmotor.burnFlash();
     m_rightmotor.burnFlash();
 
+    
+
     m_setpoint = ArmConstants.kHomePosition;
+
+
 
     m_timer = new Timer();
     m_timer.start();
 
     updateMotionProfile();
+
+   
+
 
   }
 
@@ -199,6 +217,44 @@ public class ArmSubsystem extends SubsystemBase {
         m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
+
+  
+
+
+ 
+
+  
+
+
+  public void LimitSwitchTrue(){
+    while (ArmConstants.kLimitSwitch = true){
+      m_leftmotor.set(0);
+      m_rightmotor.set(0);
+      m_setpoint = m_leftencoder.getPosition();
+    } 
+  }
+
+  public void ArmMoveBack(){
+    while (ArmConstants.kLimitSwitch = false){
+      m_leftmotor.set(-0.2);
+      m_rightmotor.set(-0.2);
+    }
+   
+  }
+
+  public void ArmMoveForward(){
+    m_leftmotor.set(0.2);
+    m_rightmotor.set(0.2);
+  }
+
+  
+
+
+
+
+
+
+
   /**
    * Drives the arm using the provided power value (usually from a joystick). This also adds in the
    * feedforward value which can help counteract gravity.
@@ -235,6 +291,13 @@ public class ArmSubsystem extends SubsystemBase {
 
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+
+    Constants.ArmConstants.kLimitSwitch = islimitSwitch.get();
+
+    SmartDashboard.putBoolean("LimitSwitch", ArmConstants.kLimitSwitch);
+
+    
+
 
     
 
