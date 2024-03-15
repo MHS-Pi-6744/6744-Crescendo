@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
 
-  public double k_autoSpeed = 0.3;
+  public double k_autoSpeed = -0.3;
   public double k_roto = 2.5;
   public double k_moto = 0.5;
   
@@ -152,6 +152,8 @@ public class Drivetrain extends SubsystemBase {
     //SmartDashboard.putNumber("Gyro Rate", m_gyro.getRate());
 
     m_drive.feed(); // Used to stop safety error messages?
+
+
   }
 
 }

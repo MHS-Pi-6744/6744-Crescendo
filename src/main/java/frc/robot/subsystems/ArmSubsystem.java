@@ -236,15 +236,15 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void ArmMoveBack(){
     while (ArmConstants.kLimitSwitch = false){
-      m_leftmotor.set(-0.2);
-      m_rightmotor.set(-0.2);
+      //m_leftmotor.set(-0.2);
+      //m_rightmotor.set(-0.2);
     }
    
   }
 
   public void ArmMoveForward(){
-    m_leftmotor.set(0.2);
-    m_rightmotor.set(0.2);
+    //m_leftmotor.set(0.2);
+    //m_rightmotor.set(0.2);
   }
 
   

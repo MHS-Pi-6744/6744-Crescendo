@@ -4,9 +4,11 @@
 
 package frc.robot;
 
+import org.littletonrobotics.urcl.URCL;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,7 +35,7 @@ public class Robot extends TimedRobot {
 
     // Start recording to data log
     DataLogManager.start();
-    //Required for AdvantageScope. requires vendor dep https://raw.githubusercontent.com/Mechanical-Advantage/URCL/maven/URCL.json -RM
+    URCL.start(); //Required for AdvantageScope. requires vendor dep https://raw.githubusercontent.com/Mechanical-Advantage/URCL/maven/URCL.json -RM
 
     enableLiveWindowInTest(true);
     
@@ -60,17 +62,26 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    
+    /* 
+    if (RobotController.getUserButton()){
+    }
+  */
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+    //if(m_RobotContainer.m_driverController.start(m_RobotContainer.setCoastMode));
+  }
 
 
   // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
   @Override
   public void autonomousInit() {
     
-  m_autonomousCommand = m_RobotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_RobotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -84,13 +95,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    
   }
 
   /** This function is called periodically during operator control. */

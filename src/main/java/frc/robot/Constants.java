@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.PIDGains;
+import frc.robot.subsystems.ArmSubsystem;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -18,6 +22,7 @@ import frc.lib.PIDGains;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
 
   public static class DrivetrainConstants {
     public static final int kLeftMotorCANID = 1;
@@ -41,12 +46,26 @@ public final class Constants {
     ((double) (Math.PI*kWheelDiameter)/(60*kGearRatio));
   }
 
-public static final class ArmConstants {     // Is the final needed here?????
+public static final class ArmConstants {     
     public static final int kLeftArmCanId = 7;
     public static final boolean kLeftArmInverted = false;
     public static final int kRightArmCanId = 8;
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
+
+
+    public static boolean kLimitSwitch = false;
+
+
+
+
+
+
+
+
+
+
+
 
     public static final double kSoftLimitReverse = -20;
     public static final double kSoftLimitForward = 100;
@@ -70,6 +89,8 @@ public static final class ArmConstants {     // Is the final needed here?????
 
     public static final double kHomePosition = 0;
     public static final double kScoringPosition = 90;
+   
+    
     
   }
 
@@ -82,10 +103,11 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final double k_shooterSpeed = 0.5;
     public static final double k_slowShooter = 0.1;
   }
-  /*public static class ClimberConstants {
+
+  public static class ClimberConstants{
     public static final int Climber_CANID = 10;
     public static final double k_climbSpeed = 1.0;
-  }*/
+  }
   
 
 
@@ -101,4 +123,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final double kDriveSpeed = .5;
     public static final double kTimeoutSeconds = 3;
   }
+
+
+ 
 }
