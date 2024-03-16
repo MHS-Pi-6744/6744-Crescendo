@@ -132,6 +132,7 @@ private void configureButtonBindings() {
     return m_chooser.getSelected();
   }
 
+  /* 
   public void setCoastMode(){
     m_arm.setArmCoastMode();
   }
@@ -139,5 +140,6 @@ private void configureButtonBindings() {
   public void setBrakeMode(){
     m_arm.setArmBrakeMode();
   }
+  */
 
 }

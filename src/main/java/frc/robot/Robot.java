@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
       m_RobotContainer.setCoastMode();
     }
   */
-    m_RobotContainer.setCoastMode();
+    //m_RobotContainer.setCoastMode();
   }
 
   @Override
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     
     m_autonomousCommand = m_RobotContainer.getAutonomousCommand();
-    m_RobotContainer.setBrakeMode();
+    //m_RobotContainer.setBrakeMode();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_RobotContainer.setBrakeMode();
+   // m_RobotContainer.setBrakeMode();
   }
 
   /** This function is called periodically during operator control. */

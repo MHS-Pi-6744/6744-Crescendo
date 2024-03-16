@@ -92,11 +92,11 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftencoder = m_leftmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_leftencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_leftencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_leftencoder.setPosition(0);
+   
     m_rightencoder = m_rightmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_rightencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_rightencoder.setPosition(0);
+   
 
     
 
@@ -105,11 +105,12 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
-    m_setpoint = m_leftencoder.getPosition();
+    
+    m_leftencoder.setPosition(90);
+    m_rightencoder.setPosition(90);
+    m_setpoint = 90;
 
 
-    m_leftencoder.setPosition(0);
-    m_rightencoder.setPosition(0);
 
     /* DOES NOT WORK 
 
@@ -233,10 +234,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightmotor.setIdleMode(IdleMode.kBrake);
   }
 
-  public void setArmStart(){
-    m_leftencoder.setPosition(90);
-    m_rightencoder.setPosition(90);
-  }
+ 
 
 
   @Override
