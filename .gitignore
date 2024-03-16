@@ -57,7 +57,7 @@
 *.tar.gz
 *.rar
 
-# Just so there aren't any conflict errors in the future. Also we don't need this in main
+# Just so there aren't any conflict errors in the future. Also we don't need this in main.
 FTCIA.java
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
