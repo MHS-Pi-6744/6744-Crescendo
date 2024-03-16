@@ -16,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
@@ -105,11 +106,11 @@ public class ArmSubsystem extends SubsystemBase {
     m_leftencoder = m_leftmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_leftencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_leftencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_leftencoder.setPosition(0);
+  
     m_rightencoder = m_rightmotor.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
     m_rightencoder.setPositionConversionFactor(ArmConstants.kPositionFactor);
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
-    m_rightencoder.setPosition(0);
+   
 
     
 
@@ -118,9 +119,8 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
-    m_setpoint = 0;
+    
 
-    m_setpoint = m_leftencoder.getPosition();
 
 
     /* DOES NOT WORK 
@@ -135,7 +135,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     
 
-    m_setpoint = ArmConstants.kHomePosition;
+    m_setpoint = ArmConstants.kScoringPosition;
+    m_leftencoder.setPosition(m_setpoint);
+    m_rightencoder.setPosition(m_setpoint);
 
 
 
@@ -219,6 +221,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_targetState.position, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
+   
+
 
   
 
@@ -230,39 +234,61 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void LimitSwitchTrue(){
     if (islimitSwitch.get()){
-      //m_leftmotor.set(0);
-      //m_rightmotor.set(0);
+      m_leftmotor.set(0);
+      m_rightmotor.set(0);
       m_setpoint = Constants.ArmConstants.kScoringPosition;
       m_leftencoder.setPosition(m_setpoint);
       m_rightencoder.setPosition(m_setpoint);
     } 
   }
 
-  public void ArmMoveBack(){
-      //m_leftmotor.set(-0.2);
-      //m_rightmotor.set(-0.2);
-    }
-   
-  
+ 
+
+
+  public Command ArmMoveBack(){
+    return startEnd(
+        () -> m_leftmotor.set(-0.2),
+        () -> m_leftmotor.set(0));
+ 
+  }
+
+  /*
+    public Command ArmMoveBackPIDCAL(){
+    return startEnd(
+        () -> m_setpoint.setPosition(m_leftmotor.getEncoder()),
+        () -> m_setpoint.setPosition(0));
+  }
+  */
+
 
   public void ArmMoveForward(){
     if (limitSwitchTF = false){
-      //m_leftmotor.set(0.2);
-      //m_rightmotor.set(0.2);
-
+      m_leftmotor.set(0.2);
+      m_rightmotor.set(0.2);
     }
+
+    
     
   }
 
-  
+  public void SetLimitSwitch(){
+    limitSwitchTF = islimitSwitch.get();  
+  }
+
+
+/*
   public void SetLimitSwitch(){
     if(islimitSwitch.get()){
       limitSwitchTF = true;
     } else {
       limitSwitchTF = false;
     }
-   
   }
+*/
+  
+ 
+   
+  
 
   
 
@@ -281,7 +307,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void runManual(double _power) {
     // reset and zero out a bunch of automatic mode stuff so exiting manual mode happens cleanly and
     // passively
-    m_setpoint = m_leftencoder.getPosition();
+    //m_setpoint = m_leftencoder.getPosition();
     updateMotionProfile();
 
     // update the feedforward variable with the newly zero target velocity
@@ -309,21 +335,10 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
 
-    new InstantCommand(() -> SetLimitSwitch());
 
-    SmartDashboard.putBoolean("Limit Switch", islimitSwitch.get());
+    SmartDashboard.putBoolean("Limit Switch", limitSwitchTF);
 
-
-
-
-    
-
-
-
-    
-
-
-    
+    SetLimitSwitch();
 
     
 
@@ -332,5 +347,4 @@ public class ArmSubsystem extends SubsystemBase {
     
     
    
-  }
-}
+  }}
