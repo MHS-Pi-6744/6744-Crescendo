@@ -41,9 +41,9 @@ public class RobotContainer {
 
   private final Command m_bluAmpAuto = new BluAmpAuto(m_drive, m_shoot);
 
-  private final Command m_outOfArea = new DriveDistance(3.0734, 0.3, m_drive);
+  private final Command m_outOfArea = new DriveDistance(3.0734, 0.5, m_drive);
 
-  private final Command m_farrer = new DriveDistance(5.87248, 0.3, m_drive);
+  private final Command m_farrer = new DriveDistance(5.87248, 0.5, m_drive);
 
   private final Command m_redAmpAuto = new RedAmpAuto(m_drive, m_shoot);
 
