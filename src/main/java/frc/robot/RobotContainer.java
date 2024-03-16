@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -38,7 +39,7 @@ public class RobotContainer {
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
-
+  private final ClimberSubsystem m_climb = new ClimberSubsystem();
   
   private final Command m_driveDistance = new DriveDistance(1, .3, m_drive);
   // negative speed moves backwards
@@ -112,6 +113,8 @@ private void configureButtonBindings() {
 
     // Move arm to scoring position with controller 2 A button
     m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
+
+    m_driverController2.x().whileTrue(m_climb.climbCommand());
 
 
 }

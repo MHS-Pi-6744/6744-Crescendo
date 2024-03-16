@@ -80,16 +80,16 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final double k_shooterSpeed = 0.5;
     public static final double k_slowShooter = 0.1;
   }
-  /*public static class ClimberConstants {
+
+  
+  public static class ClimberConstants {
     public static final int Climber_CANID = 10;
-    public static final double k_climbSpeed = 1.0;
-  }*/
+    public static final double k_climbSpeed = 0.3;
+  }
   
 
 
-
-  
- // Operator input constants - RM
+  // Operator input constants - RM
   public static class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
