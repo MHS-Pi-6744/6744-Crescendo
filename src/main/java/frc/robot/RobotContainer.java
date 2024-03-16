@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
 import frc.robot.commands.Auto.Routines.BluAmpAuto;
-import frc.robot.commands.Auto.Routines.FTCIA;
 import frc.robot.commands.Auto.Routines.RedAmpAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
@@ -48,7 +47,6 @@ public class RobotContainer {
 
   private final Command m_redAmpAuto = new RedAmpAuto(m_drive, m_shoot);
 
-  private final Command FTCIA = new FTCIA(m_drive);
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
   
@@ -76,7 +74,6 @@ public RobotContainer(){
   m_chooser.addOption("Red Amp Auto", m_redAmpAuto);
   m_chooser.addOption("Out of Home", m_outOfArea);
   m_chooser.addOption("Near end of alience", m_farrer);
-  m_chooser.addOption("FTCIA", FTCIA);
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
