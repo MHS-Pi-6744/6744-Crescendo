@@ -21,9 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
-
-
-
+import edu.wpi.first.cameraserver.CameraServer;
 
 
 
@@ -232,8 +230,8 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void LimitSwitchTrue(){
     if (islimitSwitch.get()){
-      m_leftmotor.set(0);
-      m_rightmotor.set(0);
+      //m_leftmotor.set(0);
+      //m_rightmotor.set(0);
       m_setpoint = Constants.ArmConstants.kScoringPosition;
       m_leftencoder.setPosition(m_setpoint);
       m_rightencoder.setPosition(m_setpoint);
@@ -241,16 +239,16 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void ArmMoveBack(){
-      m_leftmotor.set(-0.2);
-      m_rightmotor.set(-0.2);
+      //m_leftmotor.set(-0.2);
+      //m_rightmotor.set(-0.2);
     }
    
   
 
   public void ArmMoveForward(){
     if (limitSwitchTF = false){
-      m_leftmotor.set(0.2);
-      m_rightmotor.set(0.2);
+      //m_leftmotor.set(0.2);
+      //m_rightmotor.set(0.2);
 
     }
     
@@ -313,7 +311,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     new InstantCommand(() -> SetLimitSwitch());
 
-    SmartDashboard.putBoolean("Limit Switch", limitSwitchTF);
+    SmartDashboard.putBoolean("Limit Switch", islimitSwitch.get());
+
 
 
 

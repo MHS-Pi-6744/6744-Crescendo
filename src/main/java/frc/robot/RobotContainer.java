@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.cameraserver.CameraServer; 
 
 
 
@@ -96,6 +98,9 @@ public RobotContainer(){
   //m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
+  CameraServer.startAutomaticCapture();
+
+
 
 
 
@@ -149,10 +154,12 @@ private void configureButtonBindings() {
     // Move arm to scoring position with controller 2 A button
     m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
 
-    m_driverController2.b().whileTrue(new InstantCommand(() -> m_arm.ArmMoveBack())
+    m_driverController2.b().whileTrue(new InstantCommand(() -> m_arm.ArmMoveBack()));
+
+    m_driverController2.x().whileTrue(new InstantCommand(() -> m_arm.ArmMoveForward())
     .alongWith(new InstantCommand(() -> m_arm.LimitSwitchTrue())));
 
-    m_driverController2.x().whileTrue(new InstantCommand(() -> m_arm.ArmMoveForward()));
+    
 
 
     

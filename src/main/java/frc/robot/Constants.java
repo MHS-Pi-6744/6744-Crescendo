@@ -54,7 +54,6 @@ public static final class ArmConstants {
     public static final int kArmCurrentLimit = 40;
 
 
-    public static boolean kLimitSwitch = false;
 
 
 
