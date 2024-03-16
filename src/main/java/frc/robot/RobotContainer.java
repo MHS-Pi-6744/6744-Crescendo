@@ -55,8 +55,7 @@ public class RobotContainer {
  
 
   // The driver's controller
-  CommandXboxController m_driverController = new CommandXboxController(0);
-  CommandXboxController m_driverController2 = new CommandXboxController(1);
+  
 
   
  /* Constructor - instantiated in Robot
