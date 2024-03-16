@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
 import frc.robot.commands.Auto.Routines.BluAmpAuto;
 import frc.robot.commands.Auto.Routines.FTCIA;
 import frc.robot.commands.Auto.Routines.RedAmpAuto;
@@ -40,7 +41,10 @@ public class RobotContainer {
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
   private final Command m_bluAmpAuto = new BluAmpAuto(m_drive, m_shoot);
-  // Positive speed goes right
+
+  private final Command m_outOfArea = new DriveDistance(3.0734, 0.3, m_drive);
+
+  private final Command m_farrer = new DriveDistance(5.87248, 0.3, m_drive);
 
   private final Command m_redAmpAuto = new RedAmpAuto(m_drive, m_shoot);
 
@@ -70,6 +74,8 @@ public RobotContainer(){
   m_chooser.setDefaultOption("Do Nothing", new WaitCommand(5));
   m_chooser.addOption("Blu Amp Auto", m_bluAmpAuto);
   m_chooser.addOption("Red Amp Auto", m_redAmpAuto);
+  m_chooser.addOption("Out of Home", m_outOfArea);
+  m_chooser.addOption("Near end of alience", m_farrer);
   m_chooser.addOption("FTCIA", FTCIA);
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????

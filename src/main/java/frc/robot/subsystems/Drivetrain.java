@@ -26,12 +26,6 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax leftMotor2 = new CANSparkMax(DrivetrainConstants.kLeftMotor2CANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor1 = new CANSparkMax(DrivetrainConstants.kRightMotorCANID, MotorType.kBrushless);
   private final CANSparkMax rightMotor2 = new CANSparkMax(DrivetrainConstants.kRightMotor2CANID, MotorType.kBrushless);
-
-  final ShuffleboardTab drvTab = Shuffleboard.getTab("Drive");
-
-  public GenericEntry k_autoSpeed = drvTab.add("Speed", 0.3).getEntry();
-  public GenericEntry k_roto = drvTab.add("Rotation", 2.5).getEntry();
-  public GenericEntry k_moto = drvTab.add("Driving", 0.5).getEntry();
   
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(leftMotor1,rightMotor1);

@@ -10,13 +10,11 @@ public class BluAmpAuto extends SequentialCommandGroup{
     public BluAmpAuto(Drivetrain drive, ShooterSubsystem shooter){
         addCommands(
             // Drive far enough to go to amp
-            new DriveDistance(2.8, 0.3, drive),
+            new DriveDistance(1.93294, 0.3, drive),
             //Rotate to Amp
             new DriveRotation(90, 0.3, drive),
             //drive to the amp
             new DriveDistance(0.75, -0.3, drive),
-            // Lift arm
-            // new armCommand(),
             // Drop Note in
             // new shooterCommand(),
             // Move away
@@ -24,7 +22,7 @@ public class BluAmpAuto extends SequentialCommandGroup{
             // Rotate away
             new DriveRotation(90, -0.3, drive),
             // Drive away 
-            new DriveDistance(1.5, 0.3, drive)
+            new DriveDistance(5.00634, 0.3, drive)
         );
     }
     
