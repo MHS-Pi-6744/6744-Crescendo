@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Auto.Base.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
@@ -24,12 +24,7 @@ public class DriveRotation extends Command {
   
     @Override
     public void execute() {
-      if(m_rotation >= 0){
-        m_drive.arcadeDrive(0, m_speed); 
-      }
-      else if(m_rotation <= 0){
-        m_drive.arcadeDrive(0, -m_speed);
-      }
+      m_drive.arcadeDrive(0, m_speed);
     }
   
     @Override
@@ -39,7 +34,7 @@ public class DriveRotation extends Command {
   
     @Override
     public boolean isFinished() {
-      return m_drive.gyroGetAngle() >= m_rotation;
+      return (Math.abs(m_drive.gyroGetAngle()) >= m_rotation);  
     }
 
 }
