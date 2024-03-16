@@ -16,10 +16,12 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.PIDGains;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+
 
 
 
@@ -48,6 +50,8 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_targetState;
 
   public DigitalInput islimitSwitch = new DigitalInput(0);
+
+  public boolean limitSwitchTF;
 
 
 
@@ -227,24 +231,39 @@ public class ArmSubsystem extends SubsystemBase {
 
 
   public void LimitSwitchTrue(){
-    while (ArmConstants.kLimitSwitch = true){
+    if (islimitSwitch.get()){
       m_leftmotor.set(0);
       m_rightmotor.set(0);
-      m_setpoint = m_leftencoder.getPosition();
+      m_setpoint = Constants.ArmConstants.kScoringPosition;
+      m_leftencoder.setPosition(m_setpoint);
+      m_rightencoder.setPosition(m_setpoint);
     } 
   }
 
   public void ArmMoveBack(){
-    while (ArmConstants.kLimitSwitch = false){
-      //m_leftmotor.set(-0.2);
-      //m_rightmotor.set(-0.2);
+      m_leftmotor.set(-0.2);
+      m_rightmotor.set(-0.2);
     }
    
-  }
+  
 
   public void ArmMoveForward(){
-    //m_leftmotor.set(0.2);
-    //m_rightmotor.set(0.2);
+    if (limitSwitchTF = false){
+      m_leftmotor.set(0.2);
+      m_rightmotor.set(0.2);
+
+    }
+    
+  }
+
+  
+  public void SetLimitSwitch(){
+    if(islimitSwitch.get()){
+      limitSwitchTF = true;
+    } else {
+      limitSwitchTF = false;
+    }
+   
   }
 
   
@@ -292,9 +311,15 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
 
-    Constants.ArmConstants.kLimitSwitch = true;
+    new InstantCommand(() -> SetLimitSwitch());
 
-    SmartDashboard.putBoolean("LimitSwitch", Constants.ArmConstants.kLimitSwitch);
+    SmartDashboard.putBoolean("Limit Switch", limitSwitchTF);
+
+
+
+    
+
+
 
     
 
