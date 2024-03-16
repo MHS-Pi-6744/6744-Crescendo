@@ -292,9 +292,9 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
 
-    Constants.ArmConstants.kLimitSwitch = islimitSwitch.get();
+    Constants.ArmConstants.kLimitSwitch = true;
 
-    SmartDashboard.putBoolean("LimitSwitch", ArmConstants.kLimitSwitch);
+    SmartDashboard.putBoolean("LimitSwitch", Constants.ArmConstants.kLimitSwitch);
 
     
 
