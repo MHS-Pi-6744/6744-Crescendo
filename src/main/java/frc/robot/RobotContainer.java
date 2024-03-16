@@ -13,8 +13,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
-import frc.robot.commands.Auto.Base.Drivetrain.DriveRotation;
 import frc.robot.commands.Auto.Routines.BluAmpAuto;
 import frc.robot.commands.Auto.Routines.FTCIA;
 import frc.robot.commands.Auto.Routines.RedAmpAuto;
