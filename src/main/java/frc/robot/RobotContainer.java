@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+//import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
@@ -39,7 +39,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
-  
+
 
   private final Command m_driveDistance = new DriveDistance(m_drive.k_moto, m_drive.k_autoSpeed, m_drive);
   // negative speed moves backwards
@@ -59,9 +59,7 @@ public class RobotContainer {
   CommandXboxController m_driverController2 = new CommandXboxController(OIConstants.kDriverController2Port);
 
   
- /* Constructor - instantiated in Robot
-  *   initializes by configuring button bindings 
-   */
+ // Constructor
 public RobotContainer(){
   // Configure the button bindings using method below
   configureButtonBindings();
@@ -75,20 +73,10 @@ public RobotContainer(){
   //m_chooser.addOption("Auto Test", m_autoTest);
   m_chooser.addOption("Nothing", new WaitCommand(5));
 
-  /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
-  // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
-  m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
-  */
+ 
 }
   
 
-
-  /*configureButtonBindings sets default commands for all the subsystems and sets up commands associated
-      with controller inputs. 2 controllers are used:
-         m_driverController for drivetrain 
-         m_driverController2 for intake/shooter and arm*/
-
- 
 
 private void configureButtonBindings() {
 
@@ -98,8 +86,11 @@ private void configureButtonBindings() {
           m_drive.arcadeDriveCommand(
                 () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX())); 
 
+
+    
+    // No need for a default command if not using a motion profile
     // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
-      m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+    //  m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
 
     

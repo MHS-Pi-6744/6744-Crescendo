@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+//import edu.wpi.first.math.controller.ArmFeedforward;
+//import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.PIDGains;
 
@@ -59,14 +59,17 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final double kArmFreeSpeed = 5676.0 * kVelocityFactor;
 
     //Feedforward constants
-    public static final double kArmZeroCosineOffset =
-        1.342; // radians to add to converted arm position to get real-world arm position (starts at
+    //public static final double kArmZeroCosineOffset =
+    //    1.342; // radians to add to converted arm position to get real-world arm position (starts at
     // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
-    public static final ArmFeedforward kArmFeedforward =
-        new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+    // public static final ArmFeedforward kArmFeedforward =
+    //    new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+
+    // Arm position PID gains
     public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
-    public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(0.4, 0.2);
+
+    //  public static final TrapezoidProfile.Constraints kArmMotionConstraint =
+    //    new TrapezoidProfile.Constraints(0.4, 0.2);
 
     public static final double kHomePosition = 0;
     public static final double kScoringPosition = 90;
