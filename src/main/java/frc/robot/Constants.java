@@ -48,7 +48,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = -20;
+    public static final double kSoftLimitReverse = 3;
     public static final double kSoftLimitForward = 100;
 
     //public static final double kArmGearRatio = 8.48;
@@ -64,12 +64,13 @@ public static final class ArmConstants {     // Is the final needed here?????
     // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
     public static final ArmFeedforward kArmFeedforward =
         new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
+    public static final PIDGains kArmPositionGains = new PIDGains(0.008, 0.00000, 0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(0.4, 0.2);
+        new TrapezoidProfile.Constraints(0.6, 0.2);
 
-    public static final double kHomePosition = 0;
-    public static final double kScoringPosition = 90;
+    public static final double kHomePosition = 7;
+    public static final double kScoringPosition = 96;
+    public static final double kStartPosition = 90;
     
   }
 
@@ -79,7 +80,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final int Intake_CANID = 6;
     public static final double k_intakeSpeed = 0.7;
     public static final int Shooter_CANID = 5;
-    public static final double k_shooterSpeed = 0.5;
+    public static final double k_shooterSpeed = 0.6;
     public static final double k_slowShooter = 0.1;
   }
   /*public static class ClimberConstants {
