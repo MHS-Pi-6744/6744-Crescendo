@@ -37,6 +37,9 @@ public class ArmSubsystem extends SubsystemBase {
   private SparkPIDController m_Leftcontroller;
   private SparkPIDController m_Rightcontroller;
   private double m_setpoint;
+  private double kP = ArmConstants.kArmP;
+  private double kI = ArmConstants.kArmI;
+  private double kD = ArmConstants.kArmD;
   //private TrapezoidProfile m_profile;
   //private Timer m_timer;
   //private TrapezoidProfile.State m_startState;
@@ -88,8 +91,15 @@ public class ArmSubsystem extends SubsystemBase {
     // set up left and right PID controllers
     m_Leftcontroller = m_leftmotor.getPIDController();
     m_Rightcontroller = m_rightmotor.getPIDController();
-    PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
-    PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+    m_Leftcontroller.setP(kP);
+    m_Leftcontroller.setI(kI);
+    m_Leftcontroller.setD(kD);
+    m_Rightcontroller.setP(kP);
+    m_Rightcontroller.setI(kI);
+    m_Rightcontroller.setD(kD);
+
+    // PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
+    // PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
     
     m_leftencoder.setPosition(ArmConstants.kScoringPosition);
@@ -97,9 +107,9 @@ public class ArmSubsystem extends SubsystemBase {
     m_setpoint = ArmConstants.kScoringPosition;
 
 
-
-    m_leftmotor.burnFlash();
-    m_rightmotor.burnFlash();
+    // !!!!!!!! LEAVING THIS OUT FOR NOW BUT MAY WANT TO PUT BACK IN FOR COMPETITION
+    //m_leftmotor.burnFlash();
+    //m_rightmotor.burnFlash();
 
    
 
@@ -219,6 +229,10 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Arm Velocity", m_leftencoder.getVelocity());
     SmartDashboard.putNumber("Right Arm Velocity", m_rightencoder.getVelocity());
 
+    // display PID coefficients on SmartDashboard
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
     SmartDashboard.getNumber(" Get Intake Position", ArmConstants.kScoringPosition);
     SmartDashboard.getNumber(" Get Home Position", ArmConstants.kHomePosition);
    

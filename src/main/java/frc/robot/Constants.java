@@ -67,6 +67,10 @@ public static final class ArmConstants {     // Is the final needed here?????
 
     // Arm position PID gains
     public static final PIDGains kArmPositionGains = new PIDGains(0.004, 0.0, 0);
+    public static final double kArmP = 0.004;
+    public static final double kArmI = 1E-6;
+    public static final double kArmD = 0.0;
+
 
     //  public static final TrapezoidProfile.Constraints kArmMotionConstraint =
     //    new TrapezoidProfile.Constraints(0.4, 0.2);
