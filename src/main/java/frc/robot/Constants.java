@@ -86,6 +86,7 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final double k_intakeSpeed = 0.7;
     public static final int Shooter_CANID = 5;
 
+    
   }
   /*public static class ClimberConstants {
     public static final int Climber_CANID = 10;
