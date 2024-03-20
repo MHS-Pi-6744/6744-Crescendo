@@ -111,6 +111,8 @@ public class ArmSubsystem extends SubsystemBase {
     m_Rightcontroller.setI(ArmConstants.kIinit);
     m_Rightcontroller.setD(ArmConstants.kDinit);
 
+   
+
     //PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
     //PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
@@ -119,7 +121,12 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setPosition(ArmConstants.kStartPositionInit);
     m_setpoint = ArmConstants.kStartPositionInit;
 
-
+    m_Leftcontroller.setReference(
+        m_setpoint, CANSparkMax.ControlType.kPosition, 0, 0);
+  
+  
+    m_Rightcontroller.setReference(
+        m_setpoint, CANSparkMax.ControlType.kPosition, 0, 0);
 
     /* DOES NOT WORK 
 
@@ -150,6 +157,13 @@ public class ArmSubsystem extends SubsystemBase {
     if (_setpoint != m_setpoint) {
       m_setpoint = _setpoint;
     }
+
+    m_Leftcontroller.setReference(
+        m_setpoint, CANSparkMax.ControlType.kPosition, 0, 0);
+  
+  
+    m_Rightcontroller.setReference(
+        m_setpoint, CANSparkMax.ControlType.kPosition, 0, 0);
   }
 
 /* 

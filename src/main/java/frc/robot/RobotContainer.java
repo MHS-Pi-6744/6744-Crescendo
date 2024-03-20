@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
 import frc.robot.commands.Auto.Routines.BluAmpAuto;
@@ -99,7 +100,7 @@ private void configureButtonBindings() {
                 () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX())); 
 
     // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running
-      m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+    //m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
 
     
@@ -116,7 +117,7 @@ private void configureButtonBindings() {
     m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(m_arm.kHomePosition)));
 
     // Move arm to scoring position with controller 2 A button
-    m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(m_arm.kScoringPosition)));
+    m_driverController2.a().onTrue(new RunCommand(() -> m_arm.setTargetPosition(m_arm.kScoringPosition)));
 
     
 }
