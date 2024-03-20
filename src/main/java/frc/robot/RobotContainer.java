@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.DriveDistance;
-import frc.robot.commands.DriveRotation;
-//import frc.robot.commands.TestAuto;
+import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
+import frc.robot.commands.Auto.Routines.BluAmpAuto;
+import frc.robot.commands.Auto.Routines.RedAmpAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -39,14 +39,13 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ShooterSubsystem m_shoot = new ShooterSubsystem();
 
-  
+  private final Command m_bluAmpAuto = new BluAmpAuto(m_drive, m_shoot);
 
-  private final Command m_driveDistance = new DriveDistance(m_drive.k_moto, m_drive.k_autoSpeed, m_drive);
-  // negative speed moves backwards
+  private final Command m_outOfArea = new DriveDistance(3.0734, 0.5, m_drive);
 
-  private final Command m_driveRotation = new DriveRotation(m_drive.k_roto, m_drive.k_autoSpeed, m_drive);
-  // Positive speed goes right 
-  //private final Command m_autoTest = new TestAuto(m_drive);
+  private final Command m_farrer = new DriveDistance(5.87248, 0.5, m_drive);
+
+  private final Command m_redAmpAuto = new RedAmpAuto(m_drive, m_shoot);
 
   // The autonomous routines
   //private final Command m_dropAndGo = Autos.dropAndGoAuto(m_drive,m_intake);
@@ -70,10 +69,11 @@ public RobotContainer(){
   Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   // Add commands to the autonomous command chooser
-  m_chooser.setDefaultOption("Drive Distance", m_driveDistance);
-  m_chooser.addOption("Drive Rotations", m_driveRotation);
-  //m_chooser.addOption("Auto Test", m_autoTest);
-  m_chooser.addOption("Nothing", new WaitCommand(5));
+  m_chooser.setDefaultOption("Do Nothing", new WaitCommand(5));
+  m_chooser.addOption("Blu Amp Auto", m_bluAmpAuto);
+  m_chooser.addOption("Red Amp Auto", m_redAmpAuto);
+  m_chooser.addOption("Out of Home", m_outOfArea);
+  m_chooser.addOption("Near end of alience", m_farrer);
 
   /*  MOVED THIS TO BEGINNING OF configureButtonNindings() ???????????????????????????????????
   // set the arm subsystem to run the "runAutomatic" function continuously when no other command is running

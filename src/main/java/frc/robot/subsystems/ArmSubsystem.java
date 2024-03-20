@@ -8,8 +8,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import javax.swing.plaf.TreeUI;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -106,9 +104,9 @@ public class ArmSubsystem extends SubsystemBase {
     PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
     
-    m_leftencoder.setPosition(ArmConstants.kScoringPosition);
-    m_rightencoder.setPosition(ArmConstants.kScoringPosition);
-    m_setpoint = ArmConstants.kScoringPosition;
+    m_leftencoder.setPosition(ArmConstants.kStartPosition);
+    m_rightencoder.setPosition(ArmConstants.kStartPosition);
+    m_setpoint = ArmConstants.kStartPosition;
 
 
 
