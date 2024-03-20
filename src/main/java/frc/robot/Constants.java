@@ -48,8 +48,9 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final boolean kRightArmInverted = false;
     public static final int kArmCurrentLimit = 40;
 
-    public static final double kSoftLimitReverse = -20;
-    public static final double kSoftLimitForward = 100;
+    public static final double kSoftLimitReverse = 3;
+    public static final double kSoftLimitForward = 95;
+
 
     //public static final double kArmGearRatio = 8.48;
     public static final double kPositionFactor = 2.0625;
@@ -68,8 +69,8 @@ public static final class ArmConstants {     // Is the final needed here?????
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
         new TrapezoidProfile.Constraints(0.4, 0.2);
 
-    public static final double kHomePosition = 0;
-    public static final double kScoringPosition = 90;
+    public static final double kHomePosition = 6;
+    public static final double kScoringPosition = 92;
     
   }
 

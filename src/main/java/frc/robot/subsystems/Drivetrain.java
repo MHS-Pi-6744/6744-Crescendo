@@ -67,10 +67,10 @@ public class Drivetrain extends SubsystemBase {
     rightMotor2.setIdleMode(IdleMode.kBrake);
     
     // Set Smart Current Limit for CAN SparkMax
-    leftMotor1.setSmartCurrentLimit(40, 60);
-    leftMotor2.setSmartCurrentLimit(40, 60);
-    rightMotor1.setSmartCurrentLimit(40, 60);
-    rightMotor2.setSmartCurrentLimit(40, 60);
+    leftMotor1.setSmartCurrentLimit(40);
+    leftMotor2.setSmartCurrentLimit(40);
+    rightMotor1.setSmartCurrentLimit(40);
+    rightMotor2.setSmartCurrentLimit(40);
 
     // Setup NEO internal encoder to return SI units for odometry
     m_leftEncoder = leftMotor1.getEncoder();
