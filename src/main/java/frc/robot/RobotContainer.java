@@ -113,10 +113,10 @@ private void configureButtonBindings() {
     m_driverController.b().whileTrue(new ParallelRaceGroup(m_intake.releaseCommand(), m_shoot.shooterReleaseCommand()));
     
     // Move arm to home position with controller 2 Y button  ----- changed to controller 2  MitchSr
-    m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kHomePosition)));
+    m_driverController2.y().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(m_arm.kHomePosition)));
 
     // Move arm to scoring position with controller 2 A button
-    m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.ArmConstants.kScoringPosition)));
+    m_driverController2.a().whileTrue(new InstantCommand(() -> m_arm.setTargetPosition(m_arm.kScoringPosition)));
 
     
 }

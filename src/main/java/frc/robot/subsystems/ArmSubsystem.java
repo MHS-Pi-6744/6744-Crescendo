@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import javax.swing.plaf.TreeUI;
+//import javax.swing.plaf.TreeUI;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -19,8 +19,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.PIDGains;
-import frc.robot.Constants;
+//import frc.lib.PIDGains;
+//import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
 
@@ -46,7 +46,11 @@ public class ArmSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
 
-
+  public double k_ArmP = ArmConstants.kPinit;
+  public double k_ArmI = ArmConstants.kIinit;
+  public double k_ArmD = ArmConstants.kDinit;
+  public double kHomePosition = ArmConstants.kHomePositionInit;
+  public double kScoringPosition = ArmConstants.kScoringPositionInit;
 
   
 
@@ -98,17 +102,23 @@ public class ArmSubsystem extends SubsystemBase {
     m_rightencoder.setVelocityConversionFactor(ArmConstants.kVelocityFactor);
    
 
-    
-
     m_Leftcontroller = m_leftmotor.getPIDController();
+    m_Leftcontroller.setP(ArmConstants.kPinit);
+    m_Leftcontroller.setI(ArmConstants.kIinit);
+    m_Leftcontroller.setD(ArmConstants.kDinit);
+
     m_Rightcontroller = m_rightmotor.getPIDController();
-    PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
-    PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
+    m_Rightcontroller.setP(ArmConstants.kPinit);
+    m_Rightcontroller.setI(ArmConstants.kIinit);
+    m_Rightcontroller.setD(ArmConstants.kDinit);
+
+    //PIDGains.setSparkMaxGains(m_Leftcontroller, ArmConstants.kArmPositionGains);
+    //PIDGains.setSparkMaxGains(m_Rightcontroller, ArmConstants.kArmPositionGains);
 
     
-    m_leftencoder.setPosition(ArmConstants.kStartPosition);
-    m_rightencoder.setPosition(ArmConstants.kStartPosition);
-    m_setpoint = ArmConstants.kStartPosition;
+    m_leftencoder.setPosition(ArmConstants.kStartPositionInit);
+    m_rightencoder.setPosition(ArmConstants.kStartPositionInit);
+    m_setpoint = ArmConstants.kStartPositionInit;
 
 
 
@@ -127,20 +137,19 @@ public class ArmSubsystem extends SubsystemBase {
     m_timer = new Timer();
     m_timer.start();
 
-    updateMotionProfile();
+    //updateMotionProfile();
 
   }
 
   /**
    * Sets the target position and updates the motion profile if the target position changed.
    *
-   * @param _setpoint The new target position in wheel revolutions.
+   * @param _setpoint The new target position in degrees
    */
   
   public void setTargetPosition(double _setpoint) {
     if (_setpoint != m_setpoint) {
       m_setpoint = _setpoint;
-      updateMotionProfile();
     }
   }
 
@@ -168,12 +177,14 @@ public class ArmSubsystem extends SubsystemBase {
    * Update the motion profile variables based on the current setpoint and the pre-configured motion
    * constraints.
    */
+  /* 
   private void updateMotionProfile() {
     m_startState = new TrapezoidProfile.State(m_leftencoder.getPosition(), m_leftencoder.getVelocity());
     m_endState = new TrapezoidProfile.State(m_setpoint, 0.0);
     m_profile = new TrapezoidProfile(ArmConstants.kArmMotionConstraint);
     m_timer.reset();
   }
+  */
 
   /**
    * Drives the arm to a position using a trapezoidal motion profile. This function is usually
@@ -207,11 +218,11 @@ public class ArmSubsystem extends SubsystemBase {
    *
    * @param _power The motor power to apply.
    */
-  public void runManual(double _power) {
+  //public void runManual(double _power) {
     // reset and zero out a bunch of automatic mode stuff so exiting manual mode happens cleanly and
     // passively
-    m_setpoint = m_leftencoder.getPosition();
-    updateMotionProfile();
+  //  m_setpoint = m_leftencoder.getPosition();
+ //   updateMotionProfile();
 
     // update the feedforward variable with the newly zero target velocity
     /* Turn off feed forward 
@@ -221,8 +232,8 @@ public class ArmSubsystem extends SubsystemBase {
             */
 
     // set the power of the motor
-    m_leftmotor.set(_power);
-  }
+ //   m_leftmotor.set(_power);
+ // }
 
   public void setArmCoastMode(){
     m_leftmotor.setIdleMode(IdleMode.kCoast);
@@ -241,13 +252,30 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() { // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Arm Position", m_leftencoder.getPosition());
     SmartDashboard.putNumber("Right Arm Position", m_rightencoder.getPosition());
-    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
-    
     SmartDashboard.putNumber("Left Arm Velocity", m_leftencoder.getVelocity());
     SmartDashboard.putNumber("Right Arm Velocity", m_rightencoder.getVelocity());
 
-    SmartDashboard.getNumber(" Get Intake Position", Constants.ArmConstants.kScoringPosition);
-    SmartDashboard.getNumber(" Get Home Position", Constants.ArmConstants.kHomePosition);
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Arm SetPoint", m_setpoint);
+    SmartDashboard.putNumber("Arm P", k_ArmP);
+    SmartDashboard.putNumber("Arm I", k_ArmI);
+    SmartDashboard.putNumber("Arm D", k_ArmD);
    
+    double m_ArmP = SmartDashboard.getNumber("Arm P", ArmConstants.kPinit);
+    if((m_ArmP != k_ArmP)) {k_ArmP = m_ArmP; }
+    double m_ArmI = SmartDashboard.getNumber("Arm I", ArmConstants.kIinit);
+    if((m_ArmI != k_ArmI)) {k_ArmI = m_ArmI; }
+    double m_ArmD = SmartDashboard.getNumber("Arm D", ArmConstants.kPinit);
+    if((m_ArmD != k_ArmD)) {k_ArmD = m_ArmD; }
+
+    m_Leftcontroller.setP(k_ArmI);
+    m_Leftcontroller.setI(k_ArmI);
+    m_Leftcontroller.setD(k_ArmD);
+    m_Rightcontroller.setP(k_ArmI);
+    m_Rightcontroller.setI(k_ArmI);
+    m_Rightcontroller.setD(k_ArmD);
+
+    
   }
 }

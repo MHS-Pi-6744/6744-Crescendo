@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import frc.lib.PIDGains;
+//import frc.lib.PIDGains;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -64,24 +64,28 @@ public static final class ArmConstants {     // Is the final needed here?????
     // ~76.9deg angle)  ////  !!!!!! needs fixed !!!!
     public static final ArmFeedforward kArmFeedforward =
         new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    public static final PIDGains kArmPositionGains = new PIDGains(0.008, 0.00000, 0);
+
+    public static final double kPinit = 0.008;
+    public static final double kIinit = 0;
+    public static final double kDinit = 0;
+    //public static final PIDGains kArmPositionGains = new PIDGains(kPinit, kIinit, kDinit); //initialize with these PID gains
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
         new TrapezoidProfile.Constraints(0.6, 0.2);
+    
 
-    public static final double kHomePosition = 7;
-    public static final double kScoringPosition = 96;
-    public static final double kStartPosition = 90;
+    //Initialization set points
+    public static final double kHomePositionInit = 7;
+    public static final double kScoringPositionInit = 96;
+    public static final double kStartPositionInit = 90;
     
   }
 
-// ***** Changed these CAN IDs to match lables on SparkMax's ----- MitchSr
-//          Should this class name be something like I-SConstants???????
+
   public static class IntakeConstants {
     public static final int Intake_CANID = 6;
     public static final double k_intakeSpeed = 0.7;
     public static final int Shooter_CANID = 5;
-    public static final double k_shooterSpeed = 0.6;
-    public static final double k_slowShooter = 0.1;
+
   }
   /*public static class ClimberConstants {
     public static final int Climber_CANID = 10;
