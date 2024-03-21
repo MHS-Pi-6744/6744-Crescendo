@@ -1,4 +1,4 @@
-package frc.robot.commands.Auto.Base.Drivetrain;
+package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
