@@ -26,7 +26,7 @@ public final class Constants {
     public static final int kRightMotorCANID = 3;
     public static final int kRightMotor2CANID = 4;
 
-    public static final SPI.Port kGyroPort = SPI.Port.kOnboardCS2;
+    public static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public static final boolean kLeftEncoderReversed = false;
     public static final boolean kRightEncoderrevesed = false;
