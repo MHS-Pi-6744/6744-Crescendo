@@ -1,8 +1,7 @@
 package frc.robot.commands.Auto.Routines;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Auto.Base.Drivetrain.DriveDistance;
-import frc.robot.commands.Auto.Base.Drivetrain.DriveRotation;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -16,14 +15,14 @@ public class RedAmpAuto extends SequentialCommandGroup{
             //drive to the amp
             new DriveDistance(0.75, -0.5, drive),
             // Drop Note in
-            // new shooterCommand(),
+            new shooterCommand(new InstantCommand(() -> new testCommand()),
             // Move away
             new DriveDistance(0.5, 0.5, drive),
             // Rotate away
             new DriveRotation(90, 0.3, drive),
             // Drive away 
             new DriveDistance(1.5, 0.5, drive)
-        );
+        ));
     }
     
 }

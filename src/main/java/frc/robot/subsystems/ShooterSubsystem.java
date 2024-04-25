@@ -47,6 +47,14 @@ public ShooterSubsystem() {
                 () -> m_shooterMotor.set(-IntakeConstants.k_shooterSpeed), 
                 () -> m_shooterMotor.set(0));
     }    
+
+    public Command testCommand(){
+        return startEnd(
+            () -> m_shooterMotor.set(-IntakeConstants.k_shooterSpeed),
+            () -> m_shooterMotor.set(0));
+    }
+
+
     
 
  @Override

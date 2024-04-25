@@ -7,9 +7,9 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class TestCommand extends SequentialCommandGroup{
-    public TestCommand(){
+    public TestCommand(ShooterSubsystem shooter){
         addCommands(
-          
+
            
         );
     }
